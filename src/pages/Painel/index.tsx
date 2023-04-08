@@ -1,5 +1,20 @@
+import { useContext, useEffect } from "react";
+import { AuthContext } from "../../contexts/AuthContext/AuthContext";
+
 export const Painel = () => {
-    return (
-        <h1>Teste</h1>
-    )
-}
+  const { user, VerifyToken } = useContext(AuthContext);
+
+  useEffect(() => {
+    VerifyToken();
+  }, []);
+
+  return (
+    <>
+      {user && (
+        <h1>
+          Olá: {user.name}, seu email é: {user.email}
+        </h1>
+      )}
+    </>
+  );
+};
