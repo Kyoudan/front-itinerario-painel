@@ -48,14 +48,17 @@ export const Input = ({
 			setText(event.target.value);
 			onText(event);
 		}
-		if (text && text.length > 0) {
-			setStateLabel(true);
-		}
 	};
 
 	useEffect(() => {
 		handleHide();
 	}, []);
+
+	useEffect(() => {
+		if (text && text.length > 0) {
+			setStateLabel(true);
+		}
+	}, [text])
 
 	handleSizeHeight();
 
