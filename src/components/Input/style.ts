@@ -16,6 +16,10 @@ export const styledInput = styled.input<IStyledInput>`
 	position: relative;
 	transition: 0.3s ease;
 	z-index: 2;
+
+	@media (max-width: 600px) {
+		${({ mediaCustom }) => mediaCustom}
+	}
 `;
 
 export const styledDiv = styled.div<IStyledDiv>`
@@ -49,5 +53,9 @@ export const styledDiv = styled.div<IStyledDiv>`
 		bottom: ${({ sizeHeight }) =>
 			sizeHeight ? `${sizeHeight + 2}px` : '0px'};
 		z-index: 3;
+	}
+
+	@media (max-width: 600px) {
+		${({ mediaCustom }) => mediaCustom}
 	}
 `;

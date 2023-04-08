@@ -5,10 +5,12 @@ export interface IProps {
 	borderRadius?: string;
 	padding?: string;
 	backgroundColor?: string;
+	mediaCustom?: string;
 }
 
 export interface IStyledCard {
 	borderRadius?: string;
 	padding?: string;
 	backgroundColor?: string;
+	mediaCustom?: string;
 }

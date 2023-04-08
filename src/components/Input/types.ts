@@ -6,10 +6,12 @@ export interface IStyledDiv {
 	label?: string;
 	stateLabel?: boolean;
 	sizeHeight?: number;
+	mediaCustom?: string;
 }
 
 export interface IStyledInput {
 	borderRadius?: string;
+	mediaCustom?: string;
 }
 
 export interface IProps {
@@ -19,5 +21,6 @@ export interface IProps {
 	sizeHeight?: string;
 	isHide?: boolean;
 	borderRadius?: string;
+	mediaCustom?: string;
 	onText?: ChangeEventHandler<HTMLInputElement>;
 }

@@ -10,6 +10,7 @@ export const Input = ({
 	sizeHeight,
 	isHide,
 	borderRadius,
+	mediaCustom,
 	onText,
 }: IProps) => {
 	const [stateLabel, setStateLabel] = useState(false);
@@ -58,7 +59,7 @@ export const Input = ({
 		if (text && text.length > 0) {
 			setStateLabel(true);
 		}
-	}, [text])
+	}, [text]);
 
 	handleSizeHeight();
 
@@ -68,7 +69,8 @@ export const Input = ({
 			height={height}
 			label={label}
 			stateLabel={stateLabel}
-			sizeHeight={size}>
+			sizeHeight={size}
+			mediaCustom={mediaCustom}>
 			{hide == 'password' && (
 				<BsFillEyeSlashFill
 					className="Icon"
@@ -86,7 +88,8 @@ export const Input = ({
 				onBlur={handleBlur}
 				onChange={(event) => handleChange(event)}
 				borderRadius={borderRadius}
-				type={hide}></S.styledInput>
+				type={hide}
+				mediaCustom={mediaCustom}></S.styledInput>
 		</S.styledDiv>
 	);
 };

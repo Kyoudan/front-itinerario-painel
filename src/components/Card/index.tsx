@@ -6,12 +6,14 @@ export const Card = ({
 	borderRadius,
 	padding,
 	backgroundColor,
+	mediaCustom,
 }: IProps) => {
 	return (
 		<S.styledCard
 			borderRadius={borderRadius}
 			padding={padding}
-			backgroundColor={backgroundColor}>
+			backgroundColor={backgroundColor}
+			mediaCustom={mediaCustom}>
 			{children}
 		</S.styledCard>
 	);

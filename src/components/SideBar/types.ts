@@ -1,3 +1,4 @@
 export interface styledHeaderType {
-  size?: string;
+	size?: string;
+	animationWidth?: string;
 }

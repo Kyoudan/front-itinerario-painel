@@ -16,6 +16,7 @@ export const Button = ({
   hover,
   backgroundHover,
   justifyContent,
+  mediaCustom,
   Icon,
   onClick,
 }: IProps) => {
@@ -33,6 +34,7 @@ export const Button = ({
         hover={hover}
         backgroundHover={backgroundHover}
         justifyContent={justifyContent}
+        mediaCustom={mediaCustom}
         onClick={onClick}
       >
         {isLoading ? (

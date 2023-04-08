@@ -11,4 +11,7 @@ export const styledCard = styled.div<IStyledCard>`
 	padding: ${({ padding }) => padding};
 	box-shadow: -5px -5px 30px 0.2px rgba(0, 0, 0, 0.3);
 	z-index: 100;
+	@media (max-width: 600px) {
+		${({ mediaCustom }) => mediaCustom}
+	}
 `;
