@@ -1,5 +1,6 @@
 import { useContext, useEffect } from "react";
 import { AuthContext } from "../../contexts/AuthContext/AuthContext";
+import { SideBar } from "../../components/SideBar";
 
 export const Painel = () => {
   const { user, VerifyToken } = useContext(AuthContext);
@@ -11,9 +12,12 @@ export const Painel = () => {
   return (
     <>
       {user && (
-        <h1>
-          Olá: {user.name}, seu email é: {user.email}
-        </h1>
+        <>
+          <SideBar />
+          <h1>
+            Olá: {user.name}, seu email é: {user.email}
+          </h1>
+        </>
       )}
     </>
   );

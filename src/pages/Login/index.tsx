@@ -131,6 +131,9 @@ export const Login = () => {
           borderRadius="20px"
           isLoading={loading}
           onClick={handleLogin}
+          background="linear-gradient(35deg, #fc6262, #fc2828, #ff0101, #fc6262)"
+          border="1px solid #ff0101"
+          justifyContent="center"
         />
       </Card>
     </S.styledDiv>
