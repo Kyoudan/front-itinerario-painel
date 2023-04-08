@@ -8,4 +8,14 @@ export const styledDiv = styled.div<IDivStyled>`
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
+	background-color: #fff;
+	overflow: hidden;
+	position: relative;
+
+	img {
+		position: absolute;
+		width: 2050px;
+		height: 1110px;
+		left: 0px;
+	}
 `;

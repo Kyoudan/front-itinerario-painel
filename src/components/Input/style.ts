@@ -1,12 +1,14 @@
 import styled from '@emotion/styled';
-import { IStyledDiv } from './types';
+import { IStyledDiv, IStyledInput } from './types';
 
-export const styledInput = styled.input`
+export const styledInput = styled.input<IStyledInput>`
 	width: 100%;
 	height: 100%;
-	border-radius: 5px;
-	padding: 15px 10px 6px 10px;
+	border-radius: ${({ borderRadius }) =>
+		borderRadius ? borderRadius : '5px'};
 	background-color: transparent;
+	padding: 0px 10px;
+	padding-top: 2px;
 	border-color: #ff0101;
 	outline: none;
 	transition: 0.5 ease;
@@ -20,6 +22,7 @@ export const styledDiv = styled.div<IStyledDiv>`
 	width: ${({ width }) => (width ? width : '250px')};
 	height: ${({ height }) => (height ? height : '35px')};
 	position: relative;
+	margin: 10px;
 
 	&::after {
 		transition: top 0.5 ease;
@@ -36,5 +39,15 @@ export const styledDiv = styled.div<IStyledDiv>`
 			${({ stateLabel, sizeHeight }) =>
 				stateLabel ? '-6px' : `${sizeHeight}px`}
 		);
+	}
+
+	.Icon {
+		position: absolute;
+		font-size: 2em;
+		right: 0;
+		cursor: pointer;
+		bottom: ${({ sizeHeight }) =>
+			sizeHeight ? `${sizeHeight + 2}px` : '0px'};
+		z-index: 3;
 	}
 `;

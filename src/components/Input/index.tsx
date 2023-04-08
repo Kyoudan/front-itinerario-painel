@@ -1,25 +1,63 @@
 import * as S from './style';
 import { IProps } from './types';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, ChangeEvent } from 'react';
+import { BsFillEyeSlashFill, BsFillEyeFill } from 'react-icons/bs';
 
-export const Input = ({ width, height, label, sizeHeight }: IProps) => {
+export const Input = ({
+	width,
+	height,
+	label,
+	sizeHeight,
+	isHide,
+	borderRadius,
+	onText,
+}: IProps) => {
 	const [stateLabel, setStateLabel] = useState(false);
 	const [text, setText] = useState('');
+	const [hide, setHide] = useState('text');
 	let size = 0;
 
-	function handleClick() {
+	const handleClick = () => {
 		setStateLabel(true);
-	}
+	};
 
-	function handleBlur() {
+	const handleBlur = () => {
 		if (text.length == 0) {
 			setStateLabel(false);
 		}
-	}
+	};
 
-	if (sizeHeight) {
-		size = parseFloat(sizeHeight) / 2 - 10;
-	}
+	const handleSizeHeight = () => {
+		if (sizeHeight) {
+			size = parseFloat(sizeHeight) / 2 - 20;
+		}
+	};
+
+	const handleHide = () => {
+		if (isHide) {
+			setHide('password');
+		}
+	};
+
+	const handleIcon = () => {
+		hide == 'password' ? setHide('text') : setHide('password');
+	};
+
+	const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+		if (onText && event) {
+			setText(event.target.value);
+			onText(event);
+		}
+		if (text && text.length > 0) {
+			setStateLabel(true);
+		}
+	};
+
+	useEffect(() => {
+		handleHide();
+	}, []);
+
+	handleSizeHeight();
 
 	return (
 		<S.styledDiv
@@ -28,12 +66,24 @@ export const Input = ({ width, height, label, sizeHeight }: IProps) => {
 			label={label}
 			stateLabel={stateLabel}
 			sizeHeight={size}>
+			{hide == 'password' && (
+				<BsFillEyeSlashFill
+					className="Icon"
+					onClick={handleIcon}
+				/>
+			)}
+			{hide == 'text' && isHide && (
+				<BsFillEyeFill
+					className="Icon"
+					onClick={handleIcon}
+				/>
+			)}
 			<S.styledInput
 				onClick={handleClick}
 				onBlur={handleBlur}
-				onChange={(event) =>
-					setText(event.target.value)
-				}></S.styledInput>
+				onChange={(event) => handleChange(event)}
+				borderRadius={borderRadius}
+				type={hide}></S.styledInput>
 		</S.styledDiv>
 	);
 };
