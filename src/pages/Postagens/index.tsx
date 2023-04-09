@@ -1,7 +1,7 @@
 import { useEffect, useState, useContext } from 'react';
 import { Container } from '../../components/Container';
 import { api } from '../../api/api';
-import { IPostContent, IPosts } from './types';
+import { IHandleViewPosts, IPostContent, IPosts } from './types';
 import { Header } from './components/Header';
 import { useNavigate } from 'react-router';
 import * as S from './styles';
@@ -10,11 +10,14 @@ import { Button } from '../../components/Button';
 import { BsFillBrushFill } from 'react-icons/bs';
 import { AuthContext } from '../../contexts/AuthContext/AuthContext';
 
+
+
 export const Postagens = () => {
 	const [posts, setPosts] = useState<IPosts[]>([]);
 	const [search, setSearch] = useState('');
 	const [loading, setLoading] = useState(false);
 	const {cellphone} = useContext(AuthContext)
+	const navigate = useNavigate()
 
 	const getDices = async () => {
 		try {
@@ -39,6 +42,11 @@ export const Postagens = () => {
 			getDices();
 		} catch {}
 	};
+
+	const handleViewPost = (link: IHandleViewPosts) => {
+		console.log(link)
+		navigate(`/postagens/view?q=${link.route}`)
+	}
 
 	useEffect(() => {
 		getDices();
@@ -90,9 +98,10 @@ export const Postagens = () => {
 										height="50px"
 										background="#ff3939"
 										boxShadowHover="0px 0px 10px 1px #ff3939"
-										justifyContent="center"
+										justifyContent="center"	
 										borderRadius="50%"
 										border="none"
+										onClick={() => handleViewPost({route: item.slug})}
 										Icon={() => <BsFillBrushFill />}
 									/>
 								</div>

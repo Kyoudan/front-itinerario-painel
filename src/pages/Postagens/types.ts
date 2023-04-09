@@ -29,3 +29,7 @@ export interface IPostContent {
 export interface IStyledLoading {
 	cellphone?: boolean;
 }
+
+export interface IHandleViewPosts {
+	route: string
+}

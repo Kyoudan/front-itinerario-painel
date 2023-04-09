@@ -5,6 +5,7 @@ import { Painel } from '../pages/Painel';
 import { PrivateRoute } from '../components/PrivateRoute';
 import { Postagens } from '../pages/Postagens';
 import { CreatePostagens } from '../pages/CreatePostagens';
+import { EditPostagens } from '../pages/EditPostagens';
 
 export const RoutesProject = () => {
 	return (
@@ -40,6 +41,15 @@ export const RoutesProject = () => {
 						</PrivateRoute>
 					}
 					path="/postagens/create"
+				/>
+
+				<Route
+					element={
+						<PrivateRoute>
+							<EditPostagens />
+						</PrivateRoute>
+					}
+					path="/postagens/:slug"
 				/>
 
 				<Route
