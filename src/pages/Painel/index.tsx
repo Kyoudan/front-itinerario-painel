@@ -1,24 +1,22 @@
-import { useContext, useEffect } from "react";
-import { AuthContext } from "../../contexts/AuthContext/AuthContext";
-import { SideBar } from "../../components/SideBar";
+import { useContext, useEffect } from 'react';
+import { AuthContext } from '../../contexts/AuthContext/AuthContext';
+import { SideBar } from '../../components/SideBar';
+import { Container } from '../../components/Container';
 
 export const Painel = () => {
-  const { user, VerifyToken } = useContext(AuthContext);
+	const { user, VerifyToken } = useContext(AuthContext);
 
-  useEffect(() => {
-    VerifyToken();
-  }, []);
+	useEffect(() => {
+		VerifyToken();
+	}, []);
 
-  return (
-    <>
-      {user && (
-        <>
-          <SideBar />
-          <h1>
-            Olá: {user.name}, seu email é: {user.email}
-          </h1>
-        </>
-      )}
-    </>
-  );
+	return (
+		<>
+			{user && (
+				<Container>
+					<h1>Testeee</h1>
+				</Container>
+			)}
+		</>
+	);
 };

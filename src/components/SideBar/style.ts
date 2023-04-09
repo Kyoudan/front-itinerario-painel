@@ -11,9 +11,11 @@ export const styledHeader = styled.header<styledHeaderType>`
 	transition: 0.5 ease;
 	justify-content: space-between;
 	animation: ${({ animationWidth }) =>
-		animationWidth == 'animateWidth-in'
-			? 'animateWidth-in 0.5s ease forwards'
-			: 'animateWidth-out 0.5s ease forwards'};
+		animationWidth
+			? animationWidth == 'animateWidth-in'
+				? 'animateWidth-in 0.5s ease forwards'
+				: 'animateWidth-out 0.5s ease forwards'
+			: ''};
 
 	div {
 		width: 100%;
@@ -25,7 +27,7 @@ export const styledHeader = styled.header<styledHeaderType>`
 
 	@media (max-width: 500px) {
 		width: 100vw;
-    height: 1000px;
+		height: 1000px;
 		justify-content: flex-end;
 		align-items: flex-start;
 		padding: 10px;
@@ -94,6 +96,7 @@ export const styledDiv = styled.div`
 	justify-content: center;
 	flex-direction: row;
 	transition: 0.5 ease;
+	padding: 0px 10px;
 
 	@media (max-width: 500px) {
 		width: 50%;

@@ -2,33 +2,23 @@ import * as S from './style';
 import { Links } from './Links';
 import { useNavigate } from 'react-router';
 import { Button } from '../Button';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { AiOutlineArrowRight, AiOutlineArrowLeft } from 'react-icons/ai';
 import { ImExit } from 'react-icons/im';
 import { BsList } from 'react-icons/bs';
 import Cookies from 'js-cookie';
+import { IProps } from './types';
 
-export const SideBar = () => {
+export const SideBar = (isCellphone: IProps) => {
 	const [sizeButton, setSizeButton] = useState('60px');
 	const [justifyContent, setJustifyContent] = useState('center');
 	const [message, setMessage] = useState(false);
 	const [arrow, setArrow] = useState('AiOutlineArrowRight');
 	const [animationWidth, setAnimationWidth] = useState('');
-	const [cellphone, setCellphone] = useState(false);
 	const [activateCellphone, setActivateCellphone] = useState(false);
-	const [width, setWidth] = useState(window.innerWidth);
-	const navigate = useNavigate();
-
-	const VerifyPlataform = () => {
-		if (width < 500) {
-			setCellphone(true);
-		} else {
-			setCellphone(false);
-		}
-	};
+	const navigate = useNavigate();	
 
 	const handleSizeSideBar = () => {
-		VerifyPlataform();
 		sizeButton == '60px' ? setSizeButton('180px') : setSizeButton('60px');
 		justifyContent == 'center'
 			? setJustifyContent('flex-start')
@@ -57,31 +47,17 @@ export const SideBar = () => {
 		message
 	);
 
-	useEffect(() => {
-		function handleResize() {
-			setWidth(window.innerWidth);
-			VerifyPlataform();
-		}
-
-		window.addEventListener('resize', handleResize);
-		return () => window.removeEventListener('resize', handleResize);
-	}, [width]);
-
-	useEffect(() => {
-		VerifyPlataform();
-	}, []);
-
 	return (
 		<S.styledHeader animationWidth={animationWidth}>
 			<div>
-				{cellphone
+				{isCellphone.cellphone
 					? ButtonDices.map((item) => (
 							<S.styledDiv key={item.name}>
 								{item.button}
 							</S.styledDiv>
 					  ))
 					: ''}
-				{!cellphone ? (
+				{!isCellphone.cellphone ? (
 					<Button
 						margin="20px 0px 0px 0px"
 						width={sizeButton}
@@ -110,7 +86,7 @@ export const SideBar = () => {
 						Icon={() => <BsList />}
 					/>
 				)}
-				{!cellphone
+				{!isCellphone.cellphone
 					? ButtonDices.map((item) => (
 							<S.styledDiv key={item.name}>
 								{item.button}
@@ -119,7 +95,7 @@ export const SideBar = () => {
 					: ''}
 			</div>
 			<div>
-				{!cellphone ? (
+				{!isCellphone.cellphone ? (
 					<Button
 						Icon={() => <ImExit />}
 						width={sizeButton}
