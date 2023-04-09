@@ -25,3 +25,7 @@ export interface IPostContent {
 		name: string;
 	};
 }
+
+export interface IStyledLoading {
+	cellphone?: boolean;
+}

@@ -1,10 +1,10 @@
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../../contexts/AuthContext/AuthContext';
-import { SideBar } from '../../components/SideBar';
 import { Container } from '../../components/Container';
 
 export const Painel = () => {
 	const { user, VerifyToken } = useContext(AuthContext);
+
 
 	useEffect(() => {
 		VerifyToken();
@@ -14,7 +14,6 @@ export const Painel = () => {
 		<>
 			{user && (
 				<Container>
-					<h1>Testeee</h1>
 				</Container>
 			)}
 		</>

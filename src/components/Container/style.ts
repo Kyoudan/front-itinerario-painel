@@ -5,4 +5,5 @@ export const styledDiv = styled.div<IStyledDiv>`
 	width: 100vw;
 	display: flex;
 	flex-direction: ${({ cellphone }) => (cellphone ? 'column' : 'row')};
+	overflow: hidden;
 `;

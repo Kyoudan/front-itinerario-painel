@@ -1,6 +1,7 @@
-import { ReactNode, useEffect, useState } from 'react';
+import { ReactNode, useEffect, useState, useContext } from 'react';
 import { SideBar } from '../SideBar';
 import * as S from './style';
+import { AuthContext } from '../../contexts/AuthContext/AuthContext';
 
 interface IProps {
 	children: ReactNode;
@@ -9,12 +10,15 @@ interface IProps {
 export const Container = ({ children }: IProps) => {
 	const [cellphone, setCellphone] = useState(false);
 	const [width, setWidth] = useState(window.innerWidth);
+	const { setCellphoneContext } = useContext(AuthContext);
 
 	const VerifyPlataform = () => {
-		if (width < 500) {
+		if (width < 600) {
 			setCellphone(true);
+			setCellphoneContext?.(true);
 		} else {
 			setCellphone(false);
+			setCellphoneContext?.(false);
 		}
 	};
 

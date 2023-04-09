@@ -9,7 +9,8 @@ export const styledInput = styled.input<IStyledInput>`
 	background-color: transparent;
 	padding: 0px 10px;
 	padding-top: 2px;
-	border-color: #ff0101;
+	border: ${({ border }) => (border ? border : '1px solid #ff0101;')};
+	color: ${({ color }) => (color ? color : '#000')};
 	outline: none;
 	transition: 0.5 ease;
 	font-size: 1.2em;
@@ -26,7 +27,7 @@ export const styledDiv = styled.div<IStyledDiv>`
 	width: ${({ width }) => (width ? width : '250px')};
 	height: ${({ height }) => (height ? height : '35px')};
 	position: relative;
-	margin: 10px;
+	margin: ${({ margin }) => (margin ? margin : '10px')};
 
 	&::after {
 		transition: top 0.5 ease;
@@ -36,7 +37,8 @@ export const styledDiv = styled.div<IStyledDiv>`
 		top: 12px;
 		left: 10px;
 		transition: 0.3s ease;
-		color: rgba(255, 1, 1, 0.8);
+		color: ${({ colorLabel }) =>
+			colorLabel ? colorLabel : ' rgba(255, 1, 1, 0.8)'};
 		font-family: 'Montserrat', sans-serif;
 		cursor: text;
 		transform: translateY(

@@ -25,7 +25,7 @@ export const styledHeader = styled.header<styledHeaderType>`
 		row-gap: 10px;
 	}
 
-	@media (max-width: 500px) {
+	@media (max-width: 600px) {
 		width: 100vw;
 		height: 1000px;
 		justify-content: flex-end;
@@ -98,7 +98,7 @@ export const styledDiv = styled.div`
 	transition: 0.5 ease;
 	padding: 0px 10px;
 
-	@media (max-width: 500px) {
+	@media (max-width: 600px) {
 		width: 50%;
 		align-items: flex-start;
 		justify-content: flex-start;

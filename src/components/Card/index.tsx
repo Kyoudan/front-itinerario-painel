@@ -7,13 +7,17 @@ export const Card = ({
 	padding,
 	backgroundColor,
 	mediaCustom,
+	flexDirection,
+	width,
 }: IProps) => {
 	return (
 		<S.styledCard
 			borderRadius={borderRadius}
 			padding={padding}
 			backgroundColor={backgroundColor}
-			mediaCustom={mediaCustom}>
+			mediaCustom={mediaCustom}
+			flexDirection={flexDirection}
+			width={width}>
 			{children}
 		</S.styledCard>
 	);

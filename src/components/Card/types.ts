@@ -6,6 +6,8 @@ export interface IProps {
 	padding?: string;
 	backgroundColor?: string;
 	mediaCustom?: string;
+	flexDirection?: string;
+	width?: string;
 }
 
 export interface IStyledCard {
@@ -13,4 +15,6 @@ export interface IStyledCard {
 	padding?: string;
 	backgroundColor?: string;
 	mediaCustom?: string;
+	flexDirection?: string;
+	width?: string;
 }

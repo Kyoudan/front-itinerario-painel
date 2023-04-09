@@ -4,6 +4,7 @@ import { Error } from '../pages/Error';
 import { Painel } from '../pages/Painel';
 import { PrivateRoute } from '../components/PrivateRoute';
 import { Postagens } from '../pages/Postagens';
+import { CreatePostagens } from '../pages/CreatePostagens';
 
 export const RoutesProject = () => {
 	return (
@@ -30,6 +31,15 @@ export const RoutesProject = () => {
 						</PrivateRoute>
 					}
 					path="/postagens"
+				/>
+
+				<Route
+					element={
+						<PrivateRoute>
+							<CreatePostagens />
+						</PrivateRoute>
+					}
+					path="/postagens/create"
 				/>
 
 				<Route

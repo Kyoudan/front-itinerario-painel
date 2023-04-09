@@ -16,6 +16,12 @@ export interface IProps {
 	backgroundHover?: string;
 	justifyContent?: string;
 	mediaCustom?: string;
+	color?: string;
+	boxShadow?: string;
+	boxShadowHover?: string;
+	fontSize?: string;
+	colorLoading?: string;
+	sizeLoading?: number;
 	Icon?: IconType;
 	onClick?: MouseEventHandler;
 }
@@ -33,4 +39,8 @@ export interface IStyledButton {
 	isScale?: boolean;
 	justifyContent?: string;
 	mediaCustom?: string;
+	color?: string;
+	boxShadow?: string;
+	boxShadowHover?: string;
+	fontSize?: string;
 }

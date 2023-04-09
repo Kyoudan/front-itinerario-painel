@@ -11,6 +11,10 @@ export const Input = ({
 	isHide,
 	borderRadius,
 	mediaCustom,
+	margin,
+	border,
+	color,
+	colorLabel,
 	onText,
 }: IProps) => {
 	const [stateLabel, setStateLabel] = useState(false);
@@ -70,7 +74,9 @@ export const Input = ({
 			label={label}
 			stateLabel={stateLabel}
 			sizeHeight={size}
-			mediaCustom={mediaCustom}>
+			mediaCustom={mediaCustom}
+			margin={margin}
+			colorLabel={colorLabel}>
 			{hide == 'password' && (
 				<BsFillEyeSlashFill
 					className="Icon"
@@ -89,7 +95,9 @@ export const Input = ({
 				onChange={(event) => handleChange(event)}
 				borderRadius={borderRadius}
 				type={hide}
-				mediaCustom={mediaCustom}></S.styledInput>
+				mediaCustom={mediaCustom}
+				border={border}
+				color={color}></S.styledInput>
 		</S.styledDiv>
 	);
 };
