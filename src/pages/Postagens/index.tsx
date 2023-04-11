@@ -45,7 +45,7 @@ export const Postagens = () => {
 
 	const handleViewPost = (link: IHandleViewPosts) => {
 		console.log(link)
-		navigate(`/postagens/view?q=${link.route}`)
+		navigate(`/postagens/${link.route}`)
 	}
 
 	useEffect(() => {
@@ -101,7 +101,7 @@ export const Postagens = () => {
 										justifyContent="center"	
 										borderRadius="50%"
 										border="none"
-										onClick={() => handleViewPost({route: item.slug})}
+										onClick={() => handleViewPost({route: item.uuid})}
 										Icon={() => <BsFillBrushFill />}
 									/>
 								</div>

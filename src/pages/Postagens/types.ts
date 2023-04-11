@@ -3,7 +3,7 @@ export interface IPosts {
 	name: string;
 	description: string;
 	color: string;
-	slug: string;
+	uuid: string;
 	createdAt: string;
 	postTags: {
 		id: number;
