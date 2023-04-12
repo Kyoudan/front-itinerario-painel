@@ -10,13 +10,14 @@ import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router';
 import { AuthContext } from '../../contexts/AuthContext/AuthContext';
 import jwtDecode from 'jwt-decode';
+import { MessageBalloon } from '../../hooks/Message';
 
 export const Login = () => {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [loading, setLoading] = useState(false);
-	const [message, setMessage] = useState('');
 	const userContext = useContext(AuthContext);
+	const {element, visible, setMessage, setVisible, setType, setTitle} = MessageBalloon()
 
 	const navigation = useNavigate();
 
@@ -53,14 +54,14 @@ export const Login = () => {
 			navigation('/');
 		} catch (err: any) {
 			setLoading(false);
+			setTitle("Error")
+			setType("alert")
+			setVisible(true)
 			if (err.response) {
 				setMessage(err.response.data.message);
 			} else {
 				setMessage('* Erro inesperado!!');
 			}
-			setTimeout(() => {
-				setMessage('');
-			}, 3000);
 		}
 	};
 
@@ -84,6 +85,7 @@ export const Login = () => {
 
 	return (
 		<S.styledDiv>
+			{visible && element}
 			<img src={Fundo} />
 			<Card
 				borderRadius="30px"
@@ -116,16 +118,6 @@ export const Login = () => {
 					mediaCustom="width: 300px;"
 					isHide={true}
 				/>
-
-				{message.length > 0 && (
-					<Message
-						message={message}
-						fontSize="1.1em"
-						color="red"
-						margin="0px 0px"
-						fontFamily="Montserrat, sans-serif"
-					/>
-				)}
 
 				<Button
 					message="Logar"
