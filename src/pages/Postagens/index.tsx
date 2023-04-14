@@ -10,14 +10,12 @@ import { Button } from '../../components/Button';
 import { BsFillBrushFill } from 'react-icons/bs';
 import { AuthContext } from '../../contexts/AuthContext/AuthContext';
 
-
-
 export const Postagens = () => {
 	const [posts, setPosts] = useState<IPosts[]>([]);
 	const [search, setSearch] = useState('');
 	const [loading, setLoading] = useState(false);
-	const {cellphone} = useContext(AuthContext)
-	const navigate = useNavigate()
+	const { cellphone } = useContext(AuthContext);
+	const navigate = useNavigate();
 
 	const getDices = async () => {
 		try {
@@ -44,9 +42,9 @@ export const Postagens = () => {
 	};
 
 	const handleViewPost = (link: IHandleViewPosts) => {
-		console.log(link)
-		navigate(`/postagens/${link.route}`)
-	}
+		console.log(link);
+		navigate(`/postagens/${link.route}`);
+	};
 
 	useEffect(() => {
 		getDices();
@@ -56,7 +54,9 @@ export const Postagens = () => {
 		console.log(search);
 	}, [search]);
 
-	useEffect(() => {console.log(cellphone)}, [cellphone])
+	useEffect(() => {
+		console.log(cellphone);
+	}, [cellphone]);
 
 	return (
 		<Container>
@@ -84,24 +84,32 @@ export const Postagens = () => {
 					posts.map((item) => (
 						<S.styledPostDiv>
 							<S.styledContainerPost key={item.id}>
-								<div>
-									<S.styledPostTitle>
-										Titulo: {item.name}
-									</S.styledPostTitle>
-									<S.styledPostText>
-										Descrição: {item.description}
-									</S.styledPostText>
-								</div>
+								<S.styledDivPosts>
+									<S.styledDivPostsArea>
+										<S.styledPostTitle>Titulo:</S.styledPostTitle>
+										<S.styledPostText>{item.name}</S.styledPostText>
+									</S.styledDivPostsArea>
+									<S.styledDivPostsArea>
+										<S.styledPostTitle>Descrição:</S.styledPostTitle>
+										<S.styledPostText>{item.description}</S.styledPostText>
+									</S.styledDivPostsArea>
+									<S.styledDivPostsArea>
+										<S.styledPostTitle>Categoria:</S.styledPostTitle>
+										<S.styledPostText>{item.postTags.name}</S.styledPostText>
+									</S.styledDivPostsArea>
+								</S.styledDivPosts>
 								<div>
 									<Button
 										width="50px"
 										height="50px"
 										background="#ff3939"
 										boxShadowHover="0px 0px 10px 1px #ff3939"
-										justifyContent="center"	
+										justifyContent="center"
 										borderRadius="50%"
 										border="none"
-										onClick={() => handleViewPost({route: item.uuid})}
+										onClick={() =>
+											handleViewPost({ route: item.uuid })
+										}
 										Icon={() => <BsFillBrushFill />}
 									/>
 								</div>

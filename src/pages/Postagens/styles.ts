@@ -37,7 +37,7 @@ export const styledPostTitle = styled.h1`
 `;
 
 export const styledPostText = styled.p`
-	font-size: 1.2em;
+	font-size: 1em;
 	font-family: Montserrat, sans-serif;
 	color: #000;
 `;
@@ -57,4 +57,21 @@ export const styledLoading = styled.div<IStyledLoading>`
 	display: flex;
 	align-items: center;
 	justify-content: center;
+`;
+
+export const styledDivPosts = styled.div`
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: row;
+`;
+
+export const styledDivPostsArea = styled.div`
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	border-left: 1px solid #000;
+	padding-left: 10px;
+	padding-right: 10px;
 `;
