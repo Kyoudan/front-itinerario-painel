@@ -15,12 +15,20 @@ export const Input = ({
 	border,
 	color,
 	colorLabel,
+	value,
+	labelActive,
 	onText,
 }: IProps) => {
 	const [stateLabel, setStateLabel] = useState(false);
 	const [text, setText] = useState('');
 	const [hide, setHide] = useState('text');
 	let size = 0;
+
+	const verifyValue = () => {
+		if (value && text == '') {
+			setText(value);
+		}
+	};
 
 	const handleClick = () => {
 		setStateLabel(true);
@@ -56,7 +64,11 @@ export const Input = ({
 	};
 
 	useEffect(() => {
+		if (labelActive) {
+			setStateLabel(true);
+		}
 		handleHide();
+		verifyValue();
 	}, []);
 
 	useEffect(() => {
@@ -89,15 +101,18 @@ export const Input = ({
 					onClick={handleIcon}
 				/>
 			)}
+
 			<S.styledInput
 				onClick={handleClick}
 				onBlur={handleBlur}
+				height={height}
 				onChange={(event) => handleChange(event)}
 				borderRadius={borderRadius}
 				type={hide}
 				mediaCustom={mediaCustom}
 				border={border}
-				color={color}></S.styledInput>
+				color={color}
+				value={text}></S.styledInput>
 		</S.styledDiv>
 	);
 };

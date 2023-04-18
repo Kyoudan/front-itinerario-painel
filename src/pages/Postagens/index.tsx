@@ -16,6 +16,7 @@ export const Postagens = () => {
 	const [loading, setLoading] = useState(false);
 	const { cellphone } = useContext(AuthContext);
 	const navigate = useNavigate();
+	const { user, VerifyToken } = useContext(AuthContext);
 
 	const getDices = async () => {
 		try {
@@ -47,6 +48,7 @@ export const Postagens = () => {
 	};
 
 	useEffect(() => {
+		VerifyToken();
 		getDices();
 	}, []);
 
@@ -58,7 +60,7 @@ export const Postagens = () => {
 		console.log(cellphone);
 	}, [cellphone]);
 
-	return (
+	return user ? (
 		<Container>
 			<S.styledDiv>
 				<Header navigate={useNavigate()} />
@@ -83,19 +85,35 @@ export const Postagens = () => {
 				) : (
 					posts.map((item) => (
 						<S.styledPostDiv>
-							<S.styledContainerPost key={item.id}>
+							<S.styledContainerPost
+								key={item.id}
+								onClick={() =>
+									handleViewPost({ route: item.uuid })
+								}>
 								<S.styledDivPosts>
 									<S.styledDivPostsArea>
-										<S.styledPostTitle>Titulo:</S.styledPostTitle>
-										<S.styledPostText>{item.name}</S.styledPostText>
+										<S.styledPostTitle>
+											Titulo:
+										</S.styledPostTitle>
+										<S.styledPostText>
+											{item.name}
+										</S.styledPostText>
 									</S.styledDivPostsArea>
 									<S.styledDivPostsArea>
-										<S.styledPostTitle>Descrição:</S.styledPostTitle>
-										<S.styledPostText>{item.description}</S.styledPostText>
+										<S.styledPostTitle>
+											Descrição:
+										</S.styledPostTitle>
+										<S.styledPostText>
+											{item.description}
+										</S.styledPostText>
 									</S.styledDivPostsArea>
 									<S.styledDivPostsArea>
-										<S.styledPostTitle>Categoria:</S.styledPostTitle>
-										<S.styledPostText>{item.postTags.name}</S.styledPostText>
+										<S.styledPostTitle>
+											Categoria:
+										</S.styledPostTitle>
+										<S.styledPostText>
+											{item.postTags.name}
+										</S.styledPostText>
 									</S.styledDivPostsArea>
 								</S.styledDivPosts>
 								<div>
@@ -119,5 +137,7 @@ export const Postagens = () => {
 				)}
 			</S.styledDiv>
 		</Container>
+	) : (
+		navigate('/')
 	);
 };

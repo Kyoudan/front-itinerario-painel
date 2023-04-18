@@ -3,7 +3,7 @@ import { IStyledDiv, IStyledInput } from './types';
 
 export const styledInput = styled.input<IStyledInput>`
 	width: 100%;
-	height: 100%;
+	height: ${({ height }) => (height ? height : '100%')};
 	border-radius: ${({ borderRadius }) =>
 		borderRadius ? borderRadius : '5px'};
 	background-color: transparent;

@@ -16,6 +16,7 @@ export interface IStyledInput {
 	mediaCustom?: string;
 	border?: string;
 	color?: string;
+	height?: string;
 }
 
 export interface IProps {
@@ -30,5 +31,7 @@ export interface IProps {
 	border?: string;
 	colorLabel?: string;
 	color?: string;
+	value?: string;
+	labelActive?: boolean;
 	onText?: ChangeEventHandler<HTMLInputElement>;
 }

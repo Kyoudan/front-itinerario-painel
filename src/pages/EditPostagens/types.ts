@@ -52,3 +52,12 @@ export interface IPostContent {
 		name: string;
 	};
 }
+
+export interface IStyledTextArea {
+	height?: string;
+	type?: string;
+}
+
+export interface IStyledDivRenderContent {
+	label?: string;
+}

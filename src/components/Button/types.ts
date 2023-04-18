@@ -22,8 +22,10 @@ export interface IProps {
 	fontSize?: string;
 	colorLoading?: string;
 	sizeLoading?: number;
+	onMouseHover?: MouseEventHandler;
+	onMouseDown?: MouseEventHandler;
 	Icon?: IconType;
-	onClick?: MouseEventHandler | void;
+	onClick?: MouseEventHandler;
 }
 
 export interface IStyledButton {

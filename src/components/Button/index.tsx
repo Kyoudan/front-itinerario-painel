@@ -23,6 +23,8 @@ export const Button = ({
 	fontSize,
 	colorLoading,
 	sizeLoading,
+	onMouseHover,
+	onMouseDown,
 	Icon,
 	onClick,
 }: IProps) => {
@@ -45,7 +47,9 @@ export const Button = ({
 				onClick={onClick}
 				boxShadow={boxShadow}
 				boxShadowHover={boxShadowHover}
-				fontSize={fontSize}>
+				fontSize={fontSize}
+				onMouseOver={onMouseHover}
+				onMouseDown={onMouseDown}>
 				{isLoading ? (
 					<HashLoader
 						color={colorLoading ? colorLoading : '#fff'}

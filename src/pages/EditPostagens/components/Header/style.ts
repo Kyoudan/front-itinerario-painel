@@ -21,3 +21,18 @@ export const styledDiv = styled.div`
 		padding-right: 20px;
 	}
 `;
+
+export const styledCheckAnimation = styled.div`
+	svg {
+		border: 2px solid #fff;
+		border-radius: 5px;
+		padding: 10px 12px;
+		cursor: pointer;
+		transition: 0.5s ease;
+
+		&:hover {
+			transition: 0.5s ease;
+			background-color: #494949;
+		}
+	}
+`;
