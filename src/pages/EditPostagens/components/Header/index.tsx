@@ -9,11 +9,12 @@ import { CheckAnimate } from '../../../../components/CheckAnimation';
 interface IProps {
 	isCheck?: boolean;
 	isLoading?: boolean;
+	onClickButtonView?: MouseEventHandler;
 	navigate?: NavigateFunction;
 	onClick?: MouseEventHandler;
 }
 
-export const Header = ({ navigate, onClick, isCheck, isLoading }: IProps) => {
+export const Header = ({ navigate, onClick, isCheck, isLoading, onClickButtonView }: IProps) => {
 	const [check, setCheck] = useState(false);
 	const navigateToView = () => {
 		if (navigate) {
@@ -68,7 +69,7 @@ export const Header = ({ navigate, onClick, isCheck, isLoading }: IProps) => {
 					border="1px solid #494949"
 					backgroundHover="#494949"
 					boxShadowHover="0px 0px 10px 3px #494949"
-					onClick={navigateToView}
+					onClick={onClickButtonView}
 				/>
 				<Button
 					Icon={() => <AiOutlineFileAdd />}

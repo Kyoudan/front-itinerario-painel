@@ -22,7 +22,6 @@ export const styledDivOverflow = styled.div`
 	padding-bottom: 10px;
 	margin-bottom: 10px;
 	display: flex;
-	display: flex;
 	flex-direction: column;
 	row-gap: 15px;
 	align-items: center;
