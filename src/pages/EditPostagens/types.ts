@@ -47,10 +47,8 @@ export interface IPostAxios {
 export interface IPostContent {
 	id: number;
 	content: string;
-	PostContentType: {
-		id: number;
-		name: string;
-	};
+	type: string;
+	size: string;
 }
 
 export interface IStyledTextArea {

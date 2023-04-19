@@ -20,10 +20,7 @@ export interface IPosts {
 export interface IPostContent {
 	id: number;
 	content: string;
-	PostContentType: {
-		id: number;
-		name: string;
-	};
+	type: string;
 }
 
 export interface IStyledLoading {

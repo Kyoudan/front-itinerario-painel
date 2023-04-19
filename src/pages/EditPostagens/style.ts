@@ -127,21 +127,13 @@ export const styledTextArea = styled.textarea<IStyledTextArea>`
 	width: 100%;
 	height: ${({ height }) => (height ? height : '')};
 	height: auto;
-	resize: vertical;
+	resize: none;
 	font-size: 1.5em;
 	padding: 0px 10px;
 	border-radius: 5px;
 	border: 1px solid #ff0101;
 	padding-top: 20px;
 	outline: none;
-
-	${({ type }) =>
-		type
-			? `
-		${type == 'label' ? 'font-size: 1.3em;' : ''}
-		${type == 'textBold' ? 'font-weight: 800;' : ''}
-	`
-			: ''}
 
 	@media (max-width: 600px) {
 		width: 95%;

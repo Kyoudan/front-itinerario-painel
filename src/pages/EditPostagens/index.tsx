@@ -13,6 +13,8 @@ import { AuthContext } from "../../contexts/AuthContext/AuthContext";
 interface IItemsContent {
   id: number;
   text: string;
+  size?: string;
+  type: string;
 }
 
 export const EditPostagens = () => {
@@ -21,22 +23,26 @@ export const EditPostagens = () => {
   const [textTitle, setTextTitle] = useState("");
   const [textDescription, setTextDescription] = useState("");
   const [textColor, setTextColor] = useState("");
+  const [textSize, setTextSize] = useState("");
+  const [type, setType] = useState("");
   const [text, setText] = useState<IItemsContent[]>([]);
   const [check, setCheck] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [view, setView] = useState(true);
+  const [view, setView] = useState(false);
   const { user, VerifyToken } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleView = () => {
-	view == false ? setView(true) : setView(false)
-  }
+    view == false ? setView(true) : setView(false);
+  };
 
   const handleChange = (
     e: ChangeEvent<HTMLTextAreaElement>,
-    item: IPostContent
+    item: IPostContent,
+    size: string,
+    type: string
   ) => {
-    handleTextArea(item.id, e.target.value);
+    handleTextArea(item.id, e.target.value, type, size);
     handleTextHeight(item.id);
   };
 
@@ -58,13 +64,20 @@ export const EditPostagens = () => {
         setTextDescription(result.data.data.description);
         setTextTitle(result.data.data.name);
       }
-    } catch {}
+    } catch (err) {
+      console.log(err);
+    }
   };
 
-  const handleTextArea = (id: number, content: string) => {
+  const handleTextArea = (
+    id: number,
+    content: string,
+    type: string,
+    size: string
+  ) => {
     setText((prevState) => {
       const newArray = [...prevState];
-      newArray[id] = { id: id, text: content };
+      newArray[id] = { id: id, text: content, type, size };
       return newArray;
     });
   };
@@ -73,9 +86,16 @@ export const EditPostagens = () => {
     if (post) {
       post.data.PostContent.map((item) => {
         handleTextHeight(item.id);
+        setTextSize(item.size);
+        setType(item.type);
         setText((prevState) => {
           const newArray = [...prevState];
-          newArray[item.id] = { id: item.id, text: item.content };
+          newArray[item.id] = {
+            id: item.id,
+            text: item.content,
+            type: item.type,
+            size: item.size,
+          };
           return newArray;
         });
       });
@@ -86,6 +106,8 @@ export const EditPostagens = () => {
     setLoading(true);
     try {
       if (post) {
+		console.log(type)
+		console.log(textSize)
         const result = await api.put(
           "/postAll",
           {
@@ -94,6 +116,8 @@ export const EditPostagens = () => {
             color: textColor,
             id: post.data.id,
             content: text,
+            size: textSize,
+            type: type,
           },
           {
             headers: {
@@ -130,7 +154,7 @@ export const EditPostagens = () => {
           isCheck={check}
           isLoading={loading}
           onClick={handleUpdatePostContent}
-		  onClickButtonView={handleView}
+          onClickButtonView={handleView}
         />
         {post ? (
           <S.styledDivContent>
@@ -170,15 +194,14 @@ export const EditPostagens = () => {
 
                 {post.data.PostContent.map((item) =>
                   text[item.id] ? (
-                    <S.styledDivRenderContent
-                      label={item.PostContentType.name}
-                      key={item.id}
-                    >
+                    <S.styledDivRenderContent label={item.type} key={item.id}>
                       <S.styledTextArea
                         id={`textarea${item.id}`}
                         key={item.id}
-                        type={item.PostContentType.name}
-                        onChange={(e) => handleChange(e, item)}
+                        type={item.type}
+                        onChange={(e) =>
+                          handleChange(e, item, item.size, item.type)
+                        }
                         value={text[item.id].text}
                       />
                     </S.styledDivRenderContent>
@@ -189,16 +212,14 @@ export const EditPostagens = () => {
               </S.styledDivOverflow>
             ) : (
               <S.styledDivOverflow>
-				<h1>{textTitle}</h1>
-				<p>{textDescription}</p>
-				{text.map((item) => (
-					item ? <p>{item.text}</p> : <></>
-				))}
-			  </S.styledDivOverflow>
+                <h1>{textTitle}</h1>
+                <p>{textDescription}</p>
+                {text.map((item) => (item ? <p>{item.text}</p> : <></>))}
+              </S.styledDivOverflow>
             )}
           </S.styledDivContent>
         ) : (
-          <h1>Oi</h1>
+          <h1>Error.</h1>
         )}
       </S.styledDiv>
     </Container>
