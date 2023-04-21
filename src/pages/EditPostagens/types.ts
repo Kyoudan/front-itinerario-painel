@@ -48,12 +48,13 @@ export interface IPostContent {
 	id: number;
 	content: string;
 	type: string;
-	size: string;
+	size: number;
 }
 
 export interface IStyledTextArea {
 	height?: string;
 	type?: string;
+	fontSize?: number;
 }
 
 export interface IStyledDivRenderContent {

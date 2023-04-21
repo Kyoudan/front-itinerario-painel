@@ -7,20 +7,26 @@ export const styledInput = styled.input<IStyledInput>`
 	border-radius: ${({ borderRadius }) =>
 		borderRadius ? borderRadius : '5px'};
 	background-color: transparent;
-	padding: 0px 10px;
+	padding: ${({ padding }) => (padding ? padding : '0px 10px')};
 	padding-top: 2px;
 	border: ${({ border }) => (border ? border : '1px solid #ff0101;')};
 	color: ${({ color }) => (color ? color : '#000')};
 	outline: none;
 	transition: 0.5 ease;
-	font-size: 1.2em;
+	font-size: ${({ fontSize }) => (fontSize ? fontSize : '1.2em')};
 	position: relative;
 	transition: 0.3s ease;
+	text-align: ${({ textAlign }) => (textAlign ? textAlign : '')};
 	z-index: 2;
 
 	@media (max-width: 600px) {
 		${({ mediaCustom }) => mediaCustom}
 	}
+
+	::-webkit-color-swatch {
+		border-radius: 50%;
+	}
+
 `;
 
 export const styledDiv = styled.div<IStyledDiv>`
@@ -60,4 +66,6 @@ export const styledDiv = styled.div<IStyledDiv>`
 	@media (max-width: 600px) {
 		${({ mediaCustom }) => mediaCustom}
 	}
+
+	${({ customCode }) => (customCode ? customCode : '')}
 `;

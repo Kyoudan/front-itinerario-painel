@@ -9,12 +9,15 @@ import * as S from "./style";
 import { Input } from "../../components/Input";
 import Cookies from "js-cookie";
 import { AuthContext } from "../../contexts/AuthContext/AuthContext";
+import { Button } from "../../components/Button";
+import { AiFillDelete } from "react-icons/ai";
+import { Message } from "../../components/Message";
 
 interface IItemsContent {
   id: number;
-  text: string;
-  size?: string;
-  type: string;
+  text?: string;
+  size: number;
+  type?: string;
 }
 
 export const EditPostagens = () => {
@@ -23,7 +26,6 @@ export const EditPostagens = () => {
   const [textTitle, setTextTitle] = useState("");
   const [textDescription, setTextDescription] = useState("");
   const [textColor, setTextColor] = useState("");
-  const [textSize, setTextSize] = useState("");
   const [type, setType] = useState("");
   const [text, setText] = useState<IItemsContent[]>([]);
   const [check, setCheck] = useState(false);
@@ -39,11 +41,20 @@ export const EditPostagens = () => {
   const handleChange = (
     e: ChangeEvent<HTMLTextAreaElement>,
     item: IPostContent,
-    size: string,
+    size: number,
     type: string
   ) => {
     handleTextArea(item.id, e.target.value, type, size);
     handleTextHeight(item.id);
+  };
+
+  const handleChangeSize = async (item: IPostContent, text: number) => {
+		if(text <= 5 && text >= 0){
+			await handleSize(item.id, text);
+		} else {
+			await handleSize(item.id, 5);
+		}
+		handleTextHeight(item.id);
   };
 
   const handleTextHeight = (id: number) => {
@@ -73,29 +84,62 @@ export const EditPostagens = () => {
     id: number,
     content: string,
     type: string,
-    size: string
+    size: number
   ) => {
     setText((prevState) => {
       const newArray = [...prevState];
-      newArray[id] = { id: id, text: content, type, size };
+
+		let newSize = size;
+
+		if (size >= 5 || size <= 0) {
+			newSize = 5;
+		} 
+
+      newArray[id] = { id: id, text: content, type, size: newSize };
       return newArray;
     });
   };
 
-  const handleGetAllTextArea = () => {
+  const handleSize = (id: number, size: number) => {
+	    setText((prevState) => {
+			const newArray = [...prevState];
+
+			let newSize = size;
+
+			if (size >= 5 || size <= 0) {
+				newSize = 5;
+			} 
+
+			newArray[id] = {
+				id: id,
+				text: newArray[id].text,
+				type: newArray[id].type,
+				size: newSize,
+			};
+			return newArray;
+		});
+  };
+
+  const handleGetAllTextArea =  () => {
     if (post) {
-      post.data.PostContent.map((item) => {
+       post.data.PostContent.map( (item) => {
         handleTextHeight(item.id);
-        setTextSize(item.size);
         setType(item.type);
-        setText((prevState) => {
+
+		let size = item.size
+
+		if ( item.size >= 5 || item.size <= 0) {
+			size = 5;
+		} 
+
+         setText((prevState) => {
           const newArray = [...prevState];
           newArray[item.id] = {
-            id: item.id,
-            text: item.content,
-            type: item.type,
-            size: item.size,
-          };
+				id: item.id,
+				text: item.content,
+				type: item.type,
+				size: size,
+			};
           return newArray;
         });
       });
@@ -106,8 +150,6 @@ export const EditPostagens = () => {
     setLoading(true);
     try {
       if (post) {
-		console.log(type)
-		console.log(textSize)
         const result = await api.put(
           "/postAll",
           {
@@ -116,8 +158,6 @@ export const EditPostagens = () => {
             color: textColor,
             id: post.data.id,
             content: text,
-            size: textSize,
-            type: type,
           },
           {
             headers: {
@@ -145,7 +185,7 @@ export const EditPostagens = () => {
 
   useEffect(() => {
     handleGetAllTextArea();
-  }, [post]);
+  }, [post]);  
   return user ? (
     <Container>
       <S.styledDiv>
@@ -161,7 +201,7 @@ export const EditPostagens = () => {
             {!view ? (
               <S.styledDivOverflow>
                 <Input
-                  width="90%"
+                  width="97%"
                   label="Titulo"
                   height="50px"
                   sizeHeight="50"
@@ -171,7 +211,7 @@ export const EditPostagens = () => {
                   mediaCustom="width: 95%"
                 />
                 <Input
-                  width="90%"
+                  width="97%"
                   label="Descrição"
                   height="50px"
                   sizeHeight="50"
@@ -181,16 +221,20 @@ export const EditPostagens = () => {
                   mediaCustom="width: 95%"
                 />
 
-                <Input
-                  width="90%"
-                  label="Cor - Hexadecimal"
-                  height="50px"
-                  sizeHeight="50"
-                  onText={(e) => setTextColor(e.target.value)}
-                  value={textColor}
-                  margin="0"
-                  mediaCustom="width: 95%"
-                />
+				<S.styledDivInputColor>
+					<Input
+						width="66px"
+						height="50px"
+						sizeHeight="50"
+						onText={(e) => setTextColor(e.target.value)}
+						value={textColor}
+						margin="0"
+						border="0"
+						mediaCustom="width: 95%"
+						type="color"
+						customCode="position: absolute; top: -10px; left: 10px; z-index: 200;"
+						/>
+				</S.styledDivInputColor>
 
                 {post.data.PostContent.map((item) =>
                   text[item.id] ? (
@@ -199,11 +243,39 @@ export const EditPostagens = () => {
                         id={`textarea${item.id}`}
                         key={item.id}
                         type={item.type}
+						fontSize={text[item.id].size}
                         onChange={(e) =>
-                          handleChange(e, item, item.size, item.type)
+                          handleChange(e, item, text[item.id].size , item.type)
                         }
                         value={text[item.id].text}
                       />
+					 <S.styledDivButton>
+						 <Button 
+							width="50px" 
+							height="50px" 
+							Icon={() => <AiFillDelete />}
+							color="black" 
+							justifyContent="center" 
+							border="1px solid #494949" 
+							backgroundHover="#ff7b7b"/>
+
+						{item.type != "image" ? (
+						<Input 
+							label="Size"
+							width="50px"
+							height="50px"
+							type="number"
+							sizeHeight="50"
+							onText={(e) => handleChangeSize(item, parseFloat(e.target.value))}
+							padding="0"
+							value={text[item.id].size}
+							labelActive={true}
+							textAlign="center"
+							fontSize="1.1em"
+							max={5}
+							/>
+							) : <></>}
+					 </S.styledDivButton>
                     </S.styledDivRenderContent>
                   ) : (
                     <p>Carregando</p>
@@ -224,6 +296,6 @@ export const EditPostagens = () => {
       </S.styledDiv>
     </Container>
   ) : (
-    navigate("/login")
+    <h1>Error.</h1>
   );
 };

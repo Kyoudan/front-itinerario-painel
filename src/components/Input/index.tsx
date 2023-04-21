@@ -17,10 +17,18 @@ export const Input = ({
 	colorLabel,
 	value,
 	labelActive,
+	type,
+	padding,
+	textAlign,
+	fontSize,
+	max,
+	customCode,
 	onText,
 }: IProps) => {
 	const [stateLabel, setStateLabel] = useState(false);
-	const [text, setText] = useState('');
+	const [text, setText] = useState<string | number>(
+		type && typeof type === 'number' ? 0 : ''
+	);
 	const [hide, setHide] = useState('text');
 	let size = 0;
 
@@ -35,7 +43,7 @@ export const Input = ({
 	};
 
 	const handleBlur = () => {
-		if (text.length == 0) {
+		if (typeof text === 'string' && text.length == 0) {
 			setStateLabel(false);
 		}
 	};
@@ -47,7 +55,9 @@ export const Input = ({
 	};
 
 	const handleHide = () => {
-		if (isHide) {
+		if (type) {
+			setHide(type);
+		} else if (isHide) {
 			setHide('password');
 		}
 	};
@@ -72,8 +82,15 @@ export const Input = ({
 	}, []);
 
 	useEffect(() => {
-		if (text && text.length > 0) {
+		if (text && typeof text === 'string' && text.length > 0) {
 			setStateLabel(true);
+		}
+
+		if (max && text && typeof text === 'number') {
+			if (text >= max) {
+				setText(max);
+				console.log('Aqui');
+			}
 		}
 	}, [text]);
 
@@ -88,7 +105,8 @@ export const Input = ({
 			sizeHeight={size}
 			mediaCustom={mediaCustom}
 			margin={margin}
-			colorLabel={colorLabel}>
+			colorLabel={colorLabel}
+			customCode={customCode}>
 			{hide == 'password' && (
 				<BsFillEyeSlashFill
 					className="Icon"
@@ -102,17 +120,39 @@ export const Input = ({
 				/>
 			)}
 
-			<S.styledInput
-				onClick={handleClick}
-				onBlur={handleBlur}
-				height={height}
-				onChange={(event) => handleChange(event)}
-				borderRadius={borderRadius}
-				type={hide}
-				mediaCustom={mediaCustom}
-				border={border}
-				color={color}
-				value={text}></S.styledInput>
+			{type == 'color' ? (
+				<S.styledInput
+					onClick={handleClick}
+					onBlur={handleBlur}
+					height={height}
+					onChange={(event) => handleChange(event)}
+					borderRadius={borderRadius}
+					type={hide}
+					mediaCustom={mediaCustom}
+					border={border}
+					color="#ff9999"
+					value={text}
+					padding={padding}
+					></S.styledInput>
+			) : (
+				<S.styledInput
+					onClick={handleClick}
+					onBlur={handleBlur}
+					height={height}
+					onChange={(event) => handleChange(event)}
+					borderRadius={borderRadius}
+					type={hide}
+					mediaCustom={mediaCustom}
+					border={border}
+					color={color}
+					value={text}
+					padding={padding}
+					textAlign={textAlign}
+					max={type && typeof type === 'number' && max ? max : ''}
+					min={0}
+					fontSize={fontSize}
+					></S.styledInput>
+			)}
 		</S.styledDiv>
 	);
 };

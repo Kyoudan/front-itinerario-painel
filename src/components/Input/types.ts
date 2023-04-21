@@ -9,6 +9,7 @@ export interface IStyledDiv {
 	mediaCustom?: string;
 	colorLabel?: string;
 	margin?: string;
+	customCode?: string;
 }
 
 export interface IStyledInput {
@@ -16,7 +17,11 @@ export interface IStyledInput {
 	mediaCustom?: string;
 	border?: string;
 	color?: string;
+	padding?: string;
+	textAlign?: string;
+	fontSize?: string;
 	height?: string;
+
 }
 
 export interface IProps {
@@ -31,7 +36,13 @@ export interface IProps {
 	border?: string;
 	colorLabel?: string;
 	color?: string;
-	value?: string;
+	value?: string | number;
 	labelActive?: boolean;
+	type?: string;
+	padding?: string;
+	textAlign?: string;
+	fontSize?: string;
+	max?: number;
+	customCode?: string;
 	onText?: ChangeEventHandler<HTMLInputElement>;
 }

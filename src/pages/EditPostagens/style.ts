@@ -16,7 +16,7 @@ export const styledDivContent = styled.div`
 `;
 
 export const styledDivOverflow = styled.div`
-	width: 1200px;
+	width: 1700px;
 	height: 80vh;
 	padding-top: 10px;
 	padding-bottom: 10px;
@@ -28,6 +28,8 @@ export const styledDivOverflow = styled.div`
 	border-radius: 10px;
 	box-shadow: 0px 0px 10px 0.3px rgba(73, 73, 73, 0.5);
 	overflow-y: scroll;
+	position: relative;
+
 
 	&::-webkit-scrollbar {
 		width: 10px;
@@ -50,6 +52,17 @@ export const styledDivOverflow = styled.div`
 	&::-webkit-scrollbar-thumb:hover {
 		transition: 0.5s ease;
 		background: #555;
+	}
+	@media (max-width: 1700px) {
+		width: 1450px;
+	}
+
+	@media (max-width: 1550px) {
+		width: 1300px;
+	}
+
+	@media (max-width: 1450px) {
+		width: 1200px;
 	}
 
 	@media (max-width: 1300px) {
@@ -128,7 +141,8 @@ export const styledTextArea = styled.textarea<IStyledTextArea>`
 	height: ${({ height }) => (height ? height : '')};
 	height: auto;
 	resize: none;
-	font-size: 1.5em;
+	font-size: ${({ fontSize }) => (fontSize ? `${fontSize}em` : '1.5em')};
+	font-family: "Montserrat", sans-serif;
 	padding: 0px 10px;
 	border-radius: 5px;
 	border: 1px solid #ff0101;
@@ -141,7 +155,10 @@ export const styledTextArea = styled.textarea<IStyledTextArea>`
 `;
 
 export const styledDivRenderContent = styled.div<IStyledDivRenderContent>`
-	width: 90%;
+	width: 97%;
+	display: flex;
+	flex-direction: row;
+	column-gap: 10px;
 	position: relative;
 	::after {
 		content: '${({ label }) => (label ? label : '')}';
@@ -156,3 +173,22 @@ export const styledDivRenderContent = styled.div<IStyledDivRenderContent>`
 		color: rgba(255, 1, 1, 0.8);
 	}
 `;
+
+export const styledDivButton = styled.div`
+	width: 100px;
+	height: 100%;
+	background-color: #fff;
+	box-shadow: 0px 0px 10px 0.3px rgba(0, 0, 0, 0.3);
+	border-radius: 10px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+`;
+
+export const styledDivInputColor = styled.div`
+	width: 98%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+`
