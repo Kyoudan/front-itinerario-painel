@@ -173,6 +173,19 @@ export const styledDivRenderContent = styled.div<IStyledDivRenderContent>`
 		font-family: 'Montserrat', sans-serif;
 		color: rgba(255, 1, 1, 0.8);
 	}
+
+	img{
+		border-radius: 5px;
+		margin-top: 5px;
+		transition: .5s ease;
+		cursor: pointer;
+	}
+
+	img:hover{
+		transform: scale(2);
+		transition: .5s ease;
+		box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.3)
+	}
 `;
 
 export const styledDivButton = styled.div`
