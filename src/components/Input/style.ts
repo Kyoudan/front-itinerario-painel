@@ -24,9 +24,14 @@ export const styledInput = styled.input<IStyledInput>`
 	}
 
 	::-webkit-color-swatch {
-		border-radius: 50%;
+		border-radius: 10px;
 	}
 
+	::-webkit-inner-spin-button,
+	::-webkit-outer-spin-button {
+		-webkit-appearance: none;
+		margin: 0;
+	}
 `;
 
 export const styledDiv = styled.div<IStyledDiv>`

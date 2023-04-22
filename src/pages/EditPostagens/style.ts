@@ -13,6 +13,7 @@ export const styledDivContent = styled.div`
 	row-gap: 15px;
 	align-items: center;
 	overflow: hidden;
+
 `;
 
 export const styledDivOverflow = styled.div`
@@ -190,5 +191,18 @@ export const styledDivInputColor = styled.div`
 	width: 98%;
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
+
+	.InputArea{
+		width: 50%;
+		display: flex;
+		flex-direction: row;
+	}
 `
+
+export const styledLoadingArea = styled.div`
+	width: 100%;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+`;

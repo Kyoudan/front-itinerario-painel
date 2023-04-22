@@ -1,4 +1,4 @@
-import { useState, useEffect, ChangeEvent, useContext } from "react";
+import { useState, useEffect, ChangeEvent, useContext, useCallback } from "react";
 import { useParams } from "react-router";
 import { api } from "../../api/api";
 import { IPostAxios, IPostContent, IPosts } from "./types";
@@ -26,6 +26,7 @@ export const EditPostagens = () => {
   const [textTitle, setTextTitle] = useState("");
   const [textDescription, setTextDescription] = useState("");
   const [textColor, setTextColor] = useState("");
+  const [author, setAuthor] = useState("")
   const [type, setType] = useState("");
   const [text, setText] = useState<IItemsContent[]>([]);
   const [check, setCheck] = useState(false);
@@ -49,10 +50,12 @@ export const EditPostagens = () => {
   };
 
   const handleChangeSize = async (item: IPostContent, text: number) => {
-		if(text <= 5 && text >= 0){
+		if(text <= 3 && text >= 0){
 			await handleSize(item.id, text);
-		} else {
-			await handleSize(item.id, 5);
+		} else if (text == null) {
+			await handleSize(item.id, 1);
+    } else {
+			await handleSize(item.id, 3);
 		}
 		handleTextHeight(item.id);
   };
@@ -91,9 +94,12 @@ export const EditPostagens = () => {
 
 		let newSize = size;
 
-		if (size >= 5 || size <= 0) {
-			newSize = 5;
+		if (size >= 3 || size < 0) {
+			newSize = 3;
 		} 
+    if (size == null) {
+		newSize = 1;
+	}
 
       newArray[id] = { id: id, text: content, type, size: newSize };
       return newArray;
@@ -106,9 +112,12 @@ export const EditPostagens = () => {
 
 			let newSize = size;
 
-			if (size >= 5 || size <= 0) {
-				newSize = 5;
+			if (size >= 3 || size < 0) {
+				newSize = 3;
 			} 
+      if (size == null) {
+			newSize = 1;
+		}
 
 			newArray[id] = {
 				id: id,
@@ -128,9 +137,12 @@ export const EditPostagens = () => {
 
 		let size = item.size
 
-		if ( item.size >= 5 || item.size <= 0) {
-			size = 5;
+		if ( item.size >= 3 || item.size < 0) {
+			size = 3;
 		} 
+    if (size == null) {
+		  size = 1;
+	}
 
          setText((prevState) => {
           const newArray = [...prevState];
@@ -178,6 +190,15 @@ export const EditPostagens = () => {
     }
   };
 
+  const handleTextColor = useCallback((newColor: string) => {
+
+    const timer = setTimeout(() => {
+        setTextColor(newColor);
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, [])
+
   useEffect(() => {
     VerifyToken();
     handleGetPosts();
@@ -186,6 +207,7 @@ export const EditPostagens = () => {
   useEffect(() => {
     handleGetAllTextArea();
   }, [post]);  
+
   return user ? (
     <Container>
       <S.styledDiv>
@@ -220,21 +242,31 @@ export const EditPostagens = () => {
                   margin="0"
                   mediaCustom="width: 95%"
                 />
+                <Input
+                  width="97%"
+                  label="Autor"
+                  height="50px"
+                  sizeHeight="50"
+                  onText={(e) => setAuthor(e.target.value)}
+                  value={author}
+                  margin="0"
+                  mediaCustom="width: 95%"
+                />
 
-				<S.styledDivInputColor>
-					<Input
-						width="66px"
-						height="50px"
-						sizeHeight="50"
-						onText={(e) => setTextColor(e.target.value)}
-						value={textColor}
-						margin="0"
-						border="0"
-						mediaCustom="width: 95%"
-						type="color"
-						customCode="position: absolute; top: -10px; left: 10px; z-index: 200;"
-						/>
-				</S.styledDivInputColor>
+                <S.styledDivInputColor>
+                    <Message message="Cor: " fontFamily="Montserrat" color="#ff0101" fontSize="0.8em" margin="0px 0px 0px 10px"/>
+                    <Input
+                      width="66px"
+                      height="50px"
+                      sizeHeight="50"
+                      onText={(e) => handleTextColor(e.target.value)}
+                      value={textColor}
+                      margin="0"
+                      border="0"
+                      mediaCustom="width: 95%"
+                      type="color"
+                      />
+                </S.styledDivInputColor>
 
                 {post.data.PostContent.map((item) =>
                   text[item.id] ? (
@@ -243,7 +275,7 @@ export const EditPostagens = () => {
                         id={`textarea${item.id}`}
                         key={item.id}
                         type={item.type}
-						fontSize={text[item.id].size}
+						            fontSize={text[item.id].size}
                         onChange={(e) =>
                           handleChange(e, item, text[item.id].size , item.type)
                         }
@@ -272,13 +304,13 @@ export const EditPostagens = () => {
 							labelActive={true}
 							textAlign="center"
 							fontSize="1.1em"
-							max={5}
+							max={3}
 							/>
-							) : <></>}
+							) : <img src={text[item.id].text} width={50} height={50}></img>}
 					 </S.styledDivButton>
                     </S.styledDivRenderContent>
                   ) : (
-                    <p>Carregando</p>
+                    <Button isLoading={true} width="200px" height="200px" border="0" justifyContent="center" sizeLoading={80} colorLoading="black" backgroundColor="transparent"/>
                   )
                 )}
               </S.styledDivOverflow>
@@ -291,11 +323,15 @@ export const EditPostagens = () => {
             )}
           </S.styledDivContent>
         ) : (
-          <h1>Error.</h1>
+            <S.styledLoadingArea className="LoadingArea">
+              <Button isLoading={true} width="200px" height="200px" border="0" justifyContent="center" sizeLoading={80} colorLoading="black" backgroundColor="transparent"/>
+            </S.styledLoadingArea>
         )}
       </S.styledDiv>
     </Container>
   ) : (
-    <h1>Error.</h1>
+    <S.styledLoadingArea className="LoadingArea">
+      <Button isLoading={true} width="200px" height="200px" border="0" justifyContent="center" sizeLoading={80} colorLoading="black" backgroundColor="transparent"/>
+    </S.styledLoadingArea>
   );
 };
