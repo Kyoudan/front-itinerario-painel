@@ -22,10 +22,15 @@ export interface IProps {
 	fontSize?: string;
 	colorLoading?: string;
 	sizeLoading?: number;
+	borderHover?: string;
+	iconColor?: string;
+	iconColorHover?: string;
 	onMouseHover?: MouseEventHandler;
 	onMouseDown?: MouseEventHandler;
 	Icon?: IconType;
 	onClick?: MouseEventHandler;
+	onMouseEnter? :	MouseEventHandler;
+	onMouseLeave? : MouseEventHandler;
 }
 
 export interface IStyledButton {
@@ -45,4 +50,5 @@ export interface IStyledButton {
 	boxShadow?: string;
 	boxShadowHover?: string;
 	fontSize?: string;
+	borderHover?: string;
 }

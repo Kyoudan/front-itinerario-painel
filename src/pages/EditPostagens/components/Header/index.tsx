@@ -16,6 +16,8 @@ interface IProps {
 
 export const Header = ({ navigate, onClick, isCheck, isLoading, onClickButtonView }: IProps) => {
 	const [check, setCheck] = useState(false);
+	const [saveIconColor, setSaveIconColor] = useState<string>("#fff")
+
 	const navigateToView = () => {
 		if (navigate) {
 			navigate('/postagens');
@@ -40,12 +42,14 @@ export const Header = ({ navigate, onClick, isCheck, isLoading, onClickButtonVie
 			<div>
 				{!check ? (
 					<Button
-						Icon={() => <AiFillSave color="#fff" />}
+						Icon={() => <AiFillSave color={saveIconColor}/>}
 						width="50px"
 						justifyContent="center"
 						backgroundColor="transparent"
 						border="1px solid #ffffff"
-						backgroundHover="#494949"
+						borderHover='1px solid #56ff97'
+						backgroundHover="#56ff97"
+						boxShadowHover='0px 0px 10px 1px #56ff97'
 						onClick={navigateToView}
 						onMouseDown={onClick}
 						isLoading={isLoading}

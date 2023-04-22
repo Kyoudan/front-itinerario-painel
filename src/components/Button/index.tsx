@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import * as S from './style';
 import { IProps } from './types';
 import { HashLoader } from 'react-spinners';
@@ -23,6 +24,9 @@ export const Button = ({
 	fontSize,
 	colorLoading,
 	sizeLoading,
+	borderHover,
+	onMouseEnter,
+	onMouseLeave,
 	onMouseHover,
 	onMouseDown,
 	Icon,
@@ -49,7 +53,11 @@ export const Button = ({
 				boxShadowHover={boxShadowHover}
 				fontSize={fontSize}
 				onMouseOver={onMouseHover}
-				onMouseDown={onMouseDown}>
+				onMouseDown={onMouseDown}
+				onMouseEnter={onMouseEnter}
+				onMouseLeave={onMouseLeave}
+				borderHover={borderHover}
+				>
 				{isLoading ? (
 					<HashLoader
 						color={colorLoading ? colorLoading : '#fff'}

@@ -31,9 +31,14 @@ export const styledButton = styled.button<IStyledButton>`
 		${({ backgroundHover }) =>
 			backgroundHover ? `background-color: ${backgroundHover};` : ''}
 		box-shadow: ${({ boxShadowHover }) => (boxShadowHover ? boxShadowHover : '')};
+		border: ${({borderHover}) => borderHover ? borderHover : ''}
 	}
 
 	@media (max-width: 600px) {
 		${({ mediaCustom }) => mediaCustom}
+	}
+
+	svg{
+		color: "red"
 	}
 `;
