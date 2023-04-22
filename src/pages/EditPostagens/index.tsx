@@ -1,4 +1,10 @@
-import { useState, useEffect, ChangeEvent, useContext, useCallback } from "react";
+import {
+  useState,
+  useEffect,
+  ChangeEvent,
+  useContext,
+  useCallback,
+} from "react";
 import { useParams } from "react-router";
 import { api } from "../../api/api";
 import { IPostAxios, IPostContent, IPosts } from "./types";
@@ -26,7 +32,7 @@ export const EditPostagens = () => {
   const [textTitle, setTextTitle] = useState("");
   const [textDescription, setTextDescription] = useState("");
   const [textColor, setTextColor] = useState("");
-  const [author, setAuthor] = useState("")
+  const [author, setAuthor] = useState("");
   const [type, setType] = useState("");
   const [text, setText] = useState<IItemsContent[]>([]);
   const [check, setCheck] = useState(false);
@@ -50,14 +56,14 @@ export const EditPostagens = () => {
   };
 
   const handleChangeSize = async (item: IPostContent, text: number) => {
-		if(text <= 3 && text >= 0){
-			await handleSize(item.id, text);
-		} else if (text == null) {
-			await handleSize(item.id, 1);
+    if (text <= 3 && text >= 0) {
+      await handleSize(item.id, text);
+    } else if (text == null) {
+      await handleSize(item.id, 1);
     } else {
-			await handleSize(item.id, 3);
-		}
-		handleTextHeight(item.id);
+      await handleSize(item.id, 3);
+    }
+    handleTextHeight(item.id);
   };
 
   const handleTextHeight = (id: number) => {
@@ -92,14 +98,14 @@ export const EditPostagens = () => {
     setText((prevState) => {
       const newArray = [...prevState];
 
-		let newSize = size;
+      let newSize = size;
 
-		if (size >= 3 || size < 0) {
-			newSize = 3;
-		} 
-    if (newArray[id].type != "image" && size == null) {
-		newSize = 1;
-	}
+      if (size >= 3 || size < 0) {
+        newSize = 3;
+      }
+      if (newArray[id].type != "image" && size == null) {
+        newSize = 1;
+      }
 
       newArray[id] = { id: id, text: content, type, size: newSize };
       return newArray;
@@ -107,51 +113,51 @@ export const EditPostagens = () => {
   };
 
   const handleSize = (id: number, size: number) => {
-	    setText((prevState) => {
-			const newArray = [...prevState];
+    setText((prevState) => {
+      const newArray = [...prevState];
 
-			let newSize = size;
+      let newSize = size;
 
-			if (size >= 3 || size < 0) {
-				newSize = 3;
-			} 
+      if (size >= 3 || size < 0) {
+        newSize = 3;
+      }
       if (newArray[id].type != "image" && size == null) {
-			newSize = 1;
-		}
+        newSize = 1;
+      }
 
-			newArray[id] = {
-				id: id,
-				text: newArray[id].text,
-				type: newArray[id].type,
-				size: newSize,
-			};
-			return newArray;
-		});
+      newArray[id] = {
+        id: id,
+        text: newArray[id].text,
+        type: newArray[id].type,
+        size: newSize,
+      };
+      return newArray;
+    });
   };
 
-  const handleGetAllTextArea =  () => {
+  const handleGetAllTextArea = () => {
     if (post) {
-       post.data.PostContent.map( (item) => {
+      post.data.PostContent.map((item) => {
         handleTextHeight(item.id);
         setType(item.type);
 
-		let size = item.size
+        let size = item.size;
 
-		if ( item.size >= 3 || item.size < 0) {
-			size = 3;
-		} 
-    if (item.type != "image" && size == null) {
-		  size = 1;
-	}
+        if (item.size >= 3 || item.size < 0) {
+          size = 3;
+        }
+        if (item.type != "image" && size == null) {
+          size = 1;
+        }
 
-         setText((prevState) => {
+        setText((prevState) => {
           const newArray = [...prevState];
           newArray[item.id] = {
-				id: item.id,
-				text: item.content,
-				type: item.type,
-				size: size,
-			};
+            id: item.id,
+            text: item.content,
+            type: item.type,
+            size: size,
+          };
           return newArray;
         });
       });
@@ -191,13 +197,12 @@ export const EditPostagens = () => {
   };
 
   const handleTextColor = useCallback((newColor: string) => {
-
     const timer = setTimeout(() => {
-        setTextColor(newColor);
+      setTextColor(newColor);
     }, 1000);
 
     return () => clearTimeout(timer);
-  }, [])
+  }, []);
 
   useEffect(() => {
     VerifyToken();
@@ -206,7 +211,7 @@ export const EditPostagens = () => {
 
   useEffect(() => {
     handleGetAllTextArea();
-  }, [post]);  
+  }, [post]);
 
   return user ? (
     <Container>
@@ -254,18 +259,24 @@ export const EditPostagens = () => {
                 />
 
                 <S.styledDivInputColor>
-                    <Message message="Cor: " fontFamily="Montserrat" color="#ff0101" fontSize="0.8em" margin="0px 0px 0px 10px"/>
-                    <Input
-                      width="66px"
-                      height="50px"
-                      sizeHeight="50"
-                      onText={(e) => handleTextColor(e.target.value)}
-                      value={textColor}
-                      margin="0"
-                      border="0"
-                      mediaCustom="width: 95%"
-                      type="color"
-                      />
+                  <Message
+                    message="Cor: "
+                    fontFamily="Montserrat"
+                    color="#ff0101"
+                    fontSize="0.8em"
+                    margin="0px 0px 0px 10px"
+                  />
+                  <Input
+                    width="66px"
+                    height="50px"
+                    sizeHeight="50"
+                    onText={(e) => handleTextColor(e.target.value)}
+                    value={textColor}
+                    margin="0"
+                    border="0"
+                    mediaCustom="width: 95%"
+                    type="color"
+                  />
                 </S.styledDivInputColor>
 
                 {post.data.PostContent.map((item) =>
@@ -275,42 +286,60 @@ export const EditPostagens = () => {
                         id={`textarea${item.id}`}
                         key={item.id}
                         type={item.type}
-						            fontSize={text[item.id].size}
+                        fontSize={text[item.id].size}
                         onChange={(e) =>
-                          handleChange(e, item, text[item.id].size , item.type)
+                          handleChange(e, item, text[item.id].size, item.type)
                         }
                         value={text[item.id].text}
                       />
-					 <S.styledDivButton>
-						 <Button 
-							width="50px" 
-							height="50px" 
-							Icon={() => <AiFillDelete />}
-							color="black" 
-							justifyContent="center" 
-							border="1px solid #494949" 
-							backgroundHover="#ff7b7b"/>
+                      <S.styledDivButton>
+                        <Button
+                          width="50px"
+                          height="50px"
+                          Icon={() => <AiFillDelete />}
+                          color="black"
+                          justifyContent="center"
+                          border="1px solid #494949"
+                          backgroundHover="#ff7b7b"
+                        />
 
-						{item.type != "image" ? (
-						<Input 
-							label="Size"
-							width="50px"
-							height="50px"
-							type="number"
-							sizeHeight="50"
-							onText={(e) => handleChangeSize(item, parseFloat(e.target.value))}
-							padding="0"
-							value={text[item.id].size}
-							labelActive={true}
-							textAlign="center"
-							fontSize="1.1em"
-							max={3}
-							/>
-							) : <img src={text[item.id].text} width={50} height={50}></img>}
-					 </S.styledDivButton>
+                        {item.type != "image" ? (
+                          <Input
+                            label="Size"
+                            width="50px"
+                            height="50px"
+                            type="number"
+                            sizeHeight="50"
+                            onText={(e) =>
+                              handleChangeSize(item, parseFloat(e.target.value))
+                            }
+                            padding="0"
+                            value={text[item.id].size}
+                            labelActive={true}
+                            textAlign="center"
+                            fontSize="1.1em"
+                            max={3}
+                          />
+                        ) : (
+                          <img
+                            src={text[item.id].text}
+                            width={50}
+                            height={50}
+                          ></img>
+                        )}
+                      </S.styledDivButton>
                     </S.styledDivRenderContent>
                   ) : (
-                    <Button isLoading={true} width="200px" height="200px" border="0" justifyContent="center" sizeLoading={80} colorLoading="black" backgroundColor="transparent"/>
+                    <Button
+                      isLoading={true}
+                      width="200px"
+                      height="200px"
+                      border="0"
+                      justifyContent="center"
+                      sizeLoading={80}
+                      colorLoading="black"
+                      backgroundColor="transparent"
+                    />
                   )
                 )}
               </S.styledDivOverflow>
@@ -323,15 +352,33 @@ export const EditPostagens = () => {
             )}
           </S.styledDivContent>
         ) : (
-            <S.styledLoadingArea className="LoadingArea">
-              <Button isLoading={true} width="200px" height="200px" border="0" justifyContent="center" sizeLoading={80} colorLoading="black" backgroundColor="transparent"/>
-            </S.styledLoadingArea>
+          <S.styledLoadingArea className="LoadingArea">
+            <Button
+              isLoading={true}
+              width="200px"
+              height="200px"
+              border="0"
+              justifyContent="center"
+              sizeLoading={80}
+              colorLoading="black"
+              backgroundColor="transparent"
+            />
+          </S.styledLoadingArea>
         )}
       </S.styledDiv>
     </Container>
   ) : (
     <S.styledLoadingArea className="LoadingArea">
-      <Button isLoading={true} width="200px" height="200px" border="0" justifyContent="center" sizeLoading={80} colorLoading="black" backgroundColor="transparent"/>
+      <Button
+        isLoading={true}
+        width="200px"
+        height="200px"
+        border="0"
+        justifyContent="center"
+        sizeLoading={80}
+        colorLoading="black"
+        backgroundColor="transparent"
+      />
     </S.styledLoadingArea>
   );
 };
