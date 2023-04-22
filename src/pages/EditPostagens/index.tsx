@@ -97,7 +97,7 @@ export const EditPostagens = () => {
 		if (size >= 3 || size < 0) {
 			newSize = 3;
 		} 
-    if (size == null) {
+    if (newArray[id].type != "image" && size == null) {
 		newSize = 1;
 	}
 
@@ -115,7 +115,7 @@ export const EditPostagens = () => {
 			if (size >= 3 || size < 0) {
 				newSize = 3;
 			} 
-      if (size == null) {
+      if (newArray[id].type != "image" && size == null) {
 			newSize = 1;
 		}
 
@@ -140,7 +140,7 @@ export const EditPostagens = () => {
 		if ( item.size >= 3 || item.size < 0) {
 			size = 3;
 		} 
-    if (size == null) {
+    if (item.type != "image" && size == null) {
 		  size = 1;
 	}
 
