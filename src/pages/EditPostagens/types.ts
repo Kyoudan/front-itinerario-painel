@@ -4,6 +4,7 @@ export interface IPosts {
 		name: string;
 		description: string;
 		color: string;
+		author: string;
 		uuid: string;
 		createdAt: string;
 		postTags: {
@@ -26,6 +27,7 @@ export interface IPostAxios {
 			id: number;
 			name: string;
 			description: string;
+			author: string;
 			color: string;
 			uuid: string;
 			createdAt: string;

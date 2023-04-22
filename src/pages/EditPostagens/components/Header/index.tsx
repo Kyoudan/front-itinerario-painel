@@ -2,7 +2,7 @@ import { NavigateFunction } from 'react-router';
 import { Button } from '../../../../components/Button';
 import * as S from './style';
 import { BsViewStacked, BsFillEyeFill } from 'react-icons/bs';
-import { AiOutlineFileAdd, AiFillCheckCircle } from 'react-icons/ai';
+import { AiOutlineFileAdd, AiFillCheckCircle, AiFillSave } from 'react-icons/ai';
 import { MouseEventHandler, useState, useEffect } from 'react';
 import { CheckAnimate } from '../../../../components/CheckAnimation';
 
@@ -25,7 +25,7 @@ export const Header = ({ navigate, onClick, isCheck, isLoading, onClickButtonVie
 	const handleTimeCheck = () => {
 		setTimeout(() => {
 			setCheck(false);
-		}, 2000);
+		}, 4000);
 	};
 
 	useEffect(() => {
@@ -40,11 +40,11 @@ export const Header = ({ navigate, onClick, isCheck, isLoading, onClickButtonVie
 			<div>
 				{!check ? (
 					<Button
-						Icon={() => <AiFillCheckCircle color="#fff" />}
+						Icon={() => <AiFillSave color="#fff" />}
 						width="50px"
 						justifyContent="center"
 						backgroundColor="transparent"
-						border="1px solid #fff"
+						border="1px solid #ffffff"
 						backgroundHover="#494949"
 						onClick={navigateToView}
 						onMouseDown={onClick}

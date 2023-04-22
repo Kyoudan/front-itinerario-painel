@@ -83,6 +83,7 @@ export const EditPostagens = () => {
         setTextColor(result.data.data.color);
         setTextDescription(result.data.data.description);
         setTextTitle(result.data.data.name);
+        setAuthor(result.data.data.author)
       }
     } catch (err) {
       console.log(err);
@@ -173,6 +174,7 @@ export const EditPostagens = () => {
           {
             title: textTitle,
             description: textDescription,
+            author: author,
             color: textColor,
             id: post.data.id,
             content: text,
