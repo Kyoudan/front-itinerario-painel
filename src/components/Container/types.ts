@@ -1,3 +1,3 @@
 export interface IStyledDiv {
-	cellphone: boolean;
+  cellphone: boolean;
 }

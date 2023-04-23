@@ -1,5 +1,5 @@
 export interface IStyledMessage {
-    color?: string
-    fontColor?: string
-    animate?: string
+  color?: string;
+  fontColor?: string;
+  animate?: string;
 }

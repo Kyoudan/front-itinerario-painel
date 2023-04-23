@@ -83,7 +83,7 @@ export const EditPostagens = () => {
         setTextColor(result.data.data.color);
         setTextDescription(result.data.data.description);
         setTextTitle(result.data.data.name);
-        setAuthor(result.data.data.author)
+        setAuthor(result.data.data.author);
       }
     } catch (err) {
       console.log(err);

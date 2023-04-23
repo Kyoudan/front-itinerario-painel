@@ -1,20 +1,20 @@
-import { ReactNode } from 'react';
+import { ReactNode } from "react";
 
 export interface IProps {
-	children?: ReactNode;
-	borderRadius?: string;
-	padding?: string;
-	backgroundColor?: string;
-	mediaCustom?: string;
-	flexDirection?: string;
-	width?: string;
+  children?: ReactNode;
+  borderRadius?: string;
+  padding?: string;
+  backgroundColor?: string;
+  mediaCustom?: string;
+  flexDirection?: string;
+  width?: string;
 }
 
 export interface IStyledCard {
-	borderRadius?: string;
-	padding?: string;
-	backgroundColor?: string;
-	mediaCustom?: string;
-	flexDirection?: string;
-	width?: string;
+  borderRadius?: string;
+  padding?: string;
+  backgroundColor?: string;
+  mediaCustom?: string;
+  flexDirection?: string;
+  width?: string;
 }

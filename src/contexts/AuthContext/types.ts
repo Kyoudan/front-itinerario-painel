@@ -1,35 +1,35 @@
-import { ReactNode, Dispatch, SetStateAction } from 'react';
+import { ReactNode, Dispatch, SetStateAction } from "react";
 
 export interface IProps {
-	children?: ReactNode;
+  children?: ReactNode;
 }
 
 export interface DecodeType {
-	id?: number;
-	name?: string;
-	email?: string;
-	iat?: number;
-	exp?: number;
+  id?: number;
+  name?: string;
+  email?: string;
+  iat?: number;
+  exp?: number;
 }
 
 export interface IUserContext {
-	cellphone?: boolean;
-	setCellphoneContext?: Dispatch<SetStateAction<boolean>>;
-	user: {
-		id?: number;
-		name?: string;
-		email?: string;
-		iat?: number;
-		exp?: number;
-	};
-	setUser: Dispatch<
-		SetStateAction<{
-			id?: number;
-			name?: string;
-			email?: string;
-			iat?: number;
-			exp?: number;
-		}>
-	>;
-	VerifyToken: () => Promise<void>;
+  cellphone?: boolean;
+  setCellphoneContext?: Dispatch<SetStateAction<boolean>>;
+  user: {
+    id?: number;
+    name?: string;
+    email?: string;
+    iat?: number;
+    exp?: number;
+  };
+  setUser: Dispatch<
+    SetStateAction<{
+      id?: number;
+      name?: string;
+      email?: string;
+      iat?: number;
+      exp?: number;
+    }>
+  >;
+  VerifyToken: () => Promise<void>;
 }

@@ -1,7 +1,7 @@
-import { MouseEventHandler, ChangeEventHandler } from 'react';
+import { MouseEventHandler, ChangeEventHandler } from "react";
 export interface IProps {
-	onClick: MouseEventHandler;
-	text: ChangeEventHandler<HTMLInputElement>;
-	widthCard?: string;
-	loading?: boolean;
+  onClick: MouseEventHandler;
+  text: ChangeEventHandler<HTMLInputElement>;
+  widthCard?: string;
+  loading?: boolean;
 }

@@ -12,7 +12,7 @@ export const Painel = () => {
     setVisible(true);
     setTitle("Teste");
     setMessage("Minha descrição");
-	setType("warning")
+    setType("warning");
     VerifyToken();
   }, []);
 

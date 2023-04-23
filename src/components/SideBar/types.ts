@@ -1,8 +1,8 @@
 export interface styledHeaderType {
-	size?: string;
-	animationWidth?: string;
+  size?: string;
+  animationWidth?: string;
 }
 
 export interface IProps {
-	cellphone: boolean;
+  cellphone: boolean;
 }

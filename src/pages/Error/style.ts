@@ -1,15 +1,15 @@
-import styled from '@emotion/styled';
+import styled from "@emotion/styled";
 
 export const styledDiv = styled.div`
-	width: 100vw;
-	height: 100vh;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 
-	.Icon {
-		font-size: 8em;
-		color: #ff0101;
-	}
+  .Icon {
+    font-size: 8em;
+    color: #ff0101;
+  }
 `;
