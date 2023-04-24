@@ -18,6 +18,7 @@ import { AuthContext } from "../../contexts/AuthContext/AuthContext";
 import { Button } from "../../components/Button";
 import { AiFillDelete } from "react-icons/ai";
 import { Message } from "../../components/Message";
+import { ModalDeleteField } from "./components/ModalDeleteField";
 
 interface IItemsContent {
   id: number;
@@ -38,8 +39,17 @@ export const EditPostagens = () => {
   const [check, setCheck] = useState(false);
   const [loading, setLoading] = useState(false);
   const [view, setView] = useState(false);
+  const [reload, setReload] = useState<number>(1);
+  const [deleteSectionId, setDeleteSectionId] = useState<number>();
+  const [openModelDeleteField, setOpenModelDeleteField] =
+    useState<boolean>(false);
   const { user, VerifyToken } = useContext(AuthContext);
   const navigate = useNavigate();
+
+  const handleDeleteSection = (id: number) => {
+    setDeleteSectionId(id);
+    setOpenModelDeleteField(true);
+  };
 
   const handleView = () => {
     view == false ? setView(true) : setView(false);
@@ -212,10 +222,14 @@ export const EditPostagens = () => {
   }, []);
 
   useEffect(() => {
+    handleGetPosts();
+  }, [reload]);
+
+  useEffect(() => {
     handleGetAllTextArea();
   }, [post]);
 
-  return user ? (
+  return user && slug ? (
     <Container>
       <S.styledDiv>
         <Header
@@ -224,9 +238,17 @@ export const EditPostagens = () => {
           isLoading={loading}
           onClick={handleUpdatePostContent}
           onClickButtonView={handleView}
+          uuid={slug}
+          setReload={setReload}
         />
         {post ? (
           <S.styledDivContent>
+            <ModalDeleteField
+              open={openModelDeleteField}
+              onClose={async () => setOpenModelDeleteField(false)}
+              id={deleteSectionId}
+              setReload={setReload}
+            />
             {!view ? (
               <S.styledDivOverflow>
                 <Input
@@ -303,6 +325,7 @@ export const EditPostagens = () => {
                           justifyContent="center"
                           border="1px solid #494949"
                           backgroundHover="#ff7b7b"
+                          onClick={() => handleDeleteSection(item.id)}
                         />
 
                         {item.type != "image" ? (

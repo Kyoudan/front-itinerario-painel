@@ -7,12 +7,21 @@ import {
   AiFillCheckCircle,
   AiFillSave,
 } from "react-icons/ai";
-import { MouseEventHandler, useState, useEffect } from "react";
+import {
+  MouseEventHandler,
+  useState,
+  useEffect,
+  Dispatch,
+  SetStateAction,
+} from "react";
 import { CheckAnimate } from "../../../../components/CheckAnimation";
+import { ModalNewField } from "../ModalNewField";
 
 interface IProps {
   isCheck?: boolean;
   isLoading?: boolean;
+  uuid: string;
+  setReload: Dispatch<SetStateAction<number>>;
   onClickButtonView?: MouseEventHandler;
   navigate?: NavigateFunction;
   onClick?: MouseEventHandler;
@@ -24,9 +33,12 @@ export const Header = ({
   isCheck,
   isLoading,
   onClickButtonView,
+  uuid,
+  setReload,
 }: IProps) => {
   const [check, setCheck] = useState(false);
   const [saveIconColor, setSaveIconColor] = useState<string>("#fff");
+  const [openModalNewField, setOpenModalNewField] = useState<boolean>(false);
 
   const navigateToView = () => {
     if (navigate) {
@@ -38,6 +50,12 @@ export const Header = ({
     setTimeout(() => {
       setCheck(false);
     }, 4000);
+  };
+
+  const handleOpenModalNewField = () => {
+    openModalNewField
+      ? setOpenModalNewField(false)
+      : setOpenModalNewField(true);
   };
 
   useEffect(() => {
@@ -90,9 +108,18 @@ export const Header = ({
           border="1px solid #494949"
           backgroundHover="#494949"
           boxShadowHover="0px 0px 10px 3px #494949"
-          onClick={navigateToView}
+          onClick={handleOpenModalNewField}
         />
       </div>
+
+      {openModalNewField && (
+        <ModalNewField
+          uuid={uuid}
+          open={openModalNewField}
+          onClose={async () => setOpenModalNewField(false)}
+          setReload={setReload}
+        />
+      )}
     </S.styledDiv>
   );
 };
