@@ -222,6 +222,7 @@ export const EditPostagens = () => {
   }, []);
 
   useEffect(() => {
+    setText([])
     handleGetPosts();
   }, [reload]);
 
