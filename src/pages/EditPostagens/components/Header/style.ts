@@ -13,6 +13,7 @@ export const styledDiv = styled.div`
     width: 100%;
     display: flex;
     flex-direction: row;
+    column-gap: 10px;
   }
 
   .right {

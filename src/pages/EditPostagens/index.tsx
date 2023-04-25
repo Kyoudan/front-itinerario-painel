@@ -243,6 +243,7 @@ export const EditPostagens = () => {
           onClickButtonView={handleView}
           uuid={slug}
           setReload={setReload}
+          finished={post?.data.finished}
         />
         {post ? (
           <S.styledDivContent>
@@ -361,7 +362,7 @@ export const EditPostagens = () => {
                     <Skeleton
                       variant="rectangular"
                       width="97%"
-                      height={118}
+                      height={200}
                       style={{ borderRadius: "10px" }}
                     />
                   )

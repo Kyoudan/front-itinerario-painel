@@ -4,25 +4,35 @@ import { Button } from "@mui/material";
 import * as B from "../../../../components/Button";
 import { useState, useEffect, Dispatch, SetStateAction } from "react";
 import { Message } from "../../../../components/Message";
+import Cookies from "js-cookie";
 
 interface IProps {
-  id?: number;
+  uuid?: string;
   open: boolean;
+  finished: boolean;
   onClose: () => {};
-  setReload: Dispatch<SetStateAction<number>>;
+  setQFinished: Dispatch<SetStateAction<boolean>>
 }
 
-export const ModalDeleteField = ({ id, onClose, open, setReload }: IProps) => {
+export const ModalPublish = ({ uuid, onClose, open, finished, setQFinished }: IProps) => {
   const [disabled, setDisabled] = useState<boolean>(true);
   const [loading, setLoading] = useState<boolean>(false);
   const handleDeleteField = async () => {
     try {
       setLoading(true);
-      await api.delete(`/postcontent/${id}`);
+      await api.post(
+        `/publish/${uuid}`,
+        {
+          finished: !finished,
+        },
+        {
+          headers: {
+            Authorization: `${Cookies.get("token")}`,
+          },
+        }
+      );
       setLoading(false);
-      setReload((prevState) => {
-        return prevState + 1;
-      });
+      setQFinished(!finished);
       onClose();
     } catch (err) {
       console.log(err);
@@ -40,7 +50,7 @@ export const ModalDeleteField = ({ id, onClose, open, setReload }: IProps) => {
     <ModalComponent open={open} onClose={onClose}>
       <>
         <Message
-          message="Deseja mesmo apagar essa seção?"
+          message={!finished ? "Deseja publicar?" : "Deseja privar?"}
           fontFamily="Montserrat"
           fontSize="1em"
         />
@@ -51,7 +61,7 @@ export const ModalDeleteField = ({ id, onClose, open, setReload }: IProps) => {
             disabled={disabled}
             onClick={handleDeleteField}
           >
-            Deletar
+            {!finished ? "Publicar" : "Privar"}
           </Button>
         ) : (
           <B.Button
