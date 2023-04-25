@@ -28,6 +28,7 @@ export const styledDivOverflow = styled.div`
   border-radius: 10px;
   box-shadow: 0px 0px 10px 0.3px rgba(73, 73, 73, 0.5);
   overflow-y: scroll;
+  overflow-x: hidden;
   position: relative;
 
   &::-webkit-scrollbar {

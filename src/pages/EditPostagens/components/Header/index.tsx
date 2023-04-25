@@ -83,7 +83,7 @@ export const Header = ({
 
   return (
     <S.styledDiv>
-      <div>
+      <div className="classdiv">
         {!check ? (
           <Button
             Icon={() => <AiFillSave color={saveIconColor} />}
@@ -102,6 +102,7 @@ export const Header = ({
             <CheckAnimate width="22px" height="22px" />
           </S.styledCheckAnimation>
         )}
+
         <Button
           Icon={() =>
             !qFinished ? (
@@ -123,7 +124,7 @@ export const Header = ({
         />
       </div>
 
-      <div className="right">
+      <div className="right classdiv">
         <Button
           Icon={() => <BsFillEyeFill />}
           width="50px"

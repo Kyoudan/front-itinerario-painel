@@ -9,7 +9,7 @@ export const styledDiv = styled.div`
   background-color: #1c1c1c;
   justify-content: space-between;
 
-  div {
+  .classdiv {
     width: 100%;
     display: flex;
     flex-direction: row;
@@ -24,7 +24,11 @@ export const styledDiv = styled.div`
 `;
 
 export const styledCheckAnimation = styled.div`
+  .css-176fz6q {
+    width: 22px;
+  }
   svg {
+    width: 22px;
     border: 2px solid #fff;
     border-radius: 5px;
     padding: 10px 12px;
