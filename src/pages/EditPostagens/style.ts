@@ -81,7 +81,7 @@ export const styledDivOverflow = styled.div`
   }
 
   @media (max-width: 600px) {
-    width: 350px;
+    width: 90%;
   }
 
   @media (max-height: 650px) {
