@@ -19,6 +19,8 @@ import { Button } from "../../components/Button";
 import { AiFillDelete } from "react-icons/ai";
 import { Message } from "../../components/Message";
 import { ModalDeleteField } from "./components/ModalDeleteField";
+import { Skeleton } from "@mui/material";
+import { ViewPosts } from "./components/View";
 
 interface IItemsContent {
   id: number;
@@ -222,7 +224,7 @@ export const EditPostagens = () => {
   }, []);
 
   useEffect(() => {
-    setText([])
+    setText([]);
     handleGetPosts();
   }, [reload]);
 
@@ -356,24 +358,22 @@ export const EditPostagens = () => {
                       </S.styledDivButton>
                     </S.styledDivRenderContent>
                   ) : (
-                    <Button
-                      isLoading={true}
-                      width="200px"
-                      height="200px"
-                      border="0"
-                      justifyContent="center"
-                      sizeLoading={80}
-                      colorLoading="black"
-                      backgroundColor="transparent"
+                    <Skeleton
+                      variant="rectangular"
+                      width="97%"
+                      height={118}
+                      style={{ borderRadius: "10px" }}
                     />
                   )
                 )}
               </S.styledDivOverflow>
             ) : (
               <S.styledDivOverflow>
-                <h1>{textTitle}</h1>
-                <p>{textDescription}</p>
-                {text.map((item) => (item ? <p>{item.text}</p> : <></>))}
+                <ViewPosts
+                  textTitle={textTitle}
+                  textDescription={textDescription}
+                  text={text}
+                />
               </S.styledDivOverflow>
             )}
           </S.styledDivContent>
