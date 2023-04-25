@@ -7,6 +7,7 @@ import { Postagens } from "../pages/Postagens";
 import { CreatePostagens } from "../pages/CreatePostagens";
 import { EditPostagens } from "../pages/EditPostagens";
 import { Tags } from "../pages/Tags";
+import { TagsCreate } from "../pages/TagsCreate";
 
 export const RoutesProject = () => {
   return (
@@ -57,6 +58,15 @@ export const RoutesProject = () => {
             </PrivateRoute>
           }
           path="/tags"
+        />
+
+        <Route
+          element={
+            <PrivateRoute>
+              <TagsCreate />
+            </PrivateRoute>
+          }
+          path="/tags/create"
         />
 
         <Route element={<Error />} path="*" />

@@ -98,11 +98,11 @@ export const CreatePostagens = () => {
             />
 
             <FormControl style={{ width: "50%" }}>
-              <InputLabel id="demo-simple-select-label">Tipo</InputLabel>
+              <InputLabel id="demo-simple-select-label">Categoria</InputLabel>
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
-                label="Teste"
+                label="Categoria"
                 defaultValue={type}
                 onChange={(e) =>
                   setType(
