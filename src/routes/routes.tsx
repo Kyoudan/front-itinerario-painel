@@ -6,6 +6,7 @@ import { PrivateRoute } from "../components/PrivateRoute";
 import { Postagens } from "../pages/Postagens";
 import { CreatePostagens } from "../pages/CreatePostagens";
 import { EditPostagens } from "../pages/EditPostagens";
+import { Tags } from "../pages/Tags";
 
 export const RoutesProject = () => {
   return (
@@ -47,6 +48,15 @@ export const RoutesProject = () => {
             </PrivateRoute>
           }
           path="/postagens/:slug"
+        />
+
+        <Route
+          element={
+            <PrivateRoute>
+              <Tags />
+            </PrivateRoute>
+          }
+          path="/tags"
         />
 
         <Route element={<Error />} path="*" />
