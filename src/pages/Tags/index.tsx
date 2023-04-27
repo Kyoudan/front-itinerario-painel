@@ -162,7 +162,6 @@ export const Tags = () => {
                             border="0"
                             boxShadowHover="0px 0px 10px 1px #ff3939"
                           />
-                          
                         </TableCell>
                       </TableRow>
                     ))}
