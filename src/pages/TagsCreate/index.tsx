@@ -1,5 +1,5 @@
 import { Container } from "../../components/Container";
-import { Header } from "../Postagens/components/Header";
+import { Header } from "../Tags/components/Header";
 import { useNavigate } from "react-router";
 import * as S from "./style";
 import { Message } from "../../components/Message";
