@@ -15,6 +15,7 @@ import { Message } from "../Message";
 interface IUser {
   id: number;
   name: string;
+  image: string;
 }
 
 export const SideBar = (isCellphone: IProps) => {
@@ -58,19 +59,12 @@ export const SideBar = (isCellphone: IProps) => {
 
   useEffect(() => {
     const token = Cookies.get("token");
-    const colors = [
-      "#FF4136",
-      "#2ECC40",
-      "#0074D9",
-      "#FFDC00",
-      "#FF851B",
-      "#B10DC9",
-      "#7FDBFF",
-      "#001f3f",
-    ];
-    setColor(colors[Math.floor(Math.random() * colors.length)]);
+    const color = Cookies.get("color");
     if (token) {
       setUser(jwtDecode(token));
+    }
+    if (color) {
+      setColor(color);
     }
   }, []);
 
@@ -141,11 +135,23 @@ export const SideBar = (isCellphone: IProps) => {
                   }}
                   onClick={navigateToProfile}
                 >
-                  <Avatar
-                    sx={{ bgcolor: color, width: "20px", height: "50px" }}
-                  >
-                    {user.name.charAt(0)}
-                  </Avatar>
+                  {!user.image ? (
+                    <Avatar
+                      sx={{ bgcolor: color, width: "20px", height: "50px" }}
+                    >
+                      {user.name.charAt(0)}{" "}
+                    </Avatar>
+                  ) : (
+                    <Avatar
+                      sx={{
+                        width: "20px",
+                        height: "50px",
+                      }}
+                      alt={user.name}
+                      src={user.image}
+                    />
+                  )}
+
                   {message && (
                     <Message
                       message={user.name}

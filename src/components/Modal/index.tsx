@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 interface IProps {
   children?: JSX.Element;
   open?: boolean;
-  onClose?: () => {};
+  onClose?: () => void;
 }
 
 export const ModalComponent = ({ children, open, onClose }: IProps) => {

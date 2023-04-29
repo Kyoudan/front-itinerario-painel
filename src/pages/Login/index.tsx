@@ -46,6 +46,20 @@ export const Login = () => {
         sameSite: "strict",
         expires: 1,
       });
+      const colors = [
+        "#FF4136",
+        "#2ECC40",
+        "#0074D9",
+        "#FFDC00",
+        "#FF851B",
+        "#B10DC9",
+        "#7FDBFF",
+        "#001f3f",
+      ];
+      Cookies.set("color", colors[Math.floor(Math.random() * colors.length)], {
+        sameSite: "strict",
+        expires: 1,
+      });
       const decode = await jwtDecode(result.data);
       if (decode) {
         console.log(decode);
