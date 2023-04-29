@@ -5,6 +5,9 @@ import { MouseEventHandler } from "react";
 import { NavigateFunction } from "react-router";
 import { TbHash } from "react-icons/tb";
 import { IoPersonCircle } from "react-icons/io5";
+import { Avatar } from "@mui/material";
+import { Message } from "../Message";
+import { useEffect, useState } from "react";
 
 export const Links = (
   navigate: NavigateFunction,
@@ -64,16 +67,16 @@ export const Links = (
       ),
     },
     {
-      name: "Perfil",
+      name: "Perfils",
       button: (
         <Button
-          message={message ? "Perfil" : ""}
+          message={message ? "Perfils" : ""}
           width={width}
           backgroundColor="#1c1c1c"
           border="none"
           backgroundHover="#494949"
           Icon={() => <IoPersonCircle />}
-          onClick={handleClick("/profile")}
+          onClick={handleClick("/users")}
           justifyContent={justify}
         />
       ),

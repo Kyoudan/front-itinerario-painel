@@ -2,12 +2,20 @@ import * as S from "./style";
 import { Links } from "./Links";
 import { useNavigate } from "react-router";
 import { Button } from "../Button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AiOutlineArrowRight, AiOutlineArrowLeft } from "react-icons/ai";
 import { ImExit } from "react-icons/im";
 import { BsList } from "react-icons/bs";
 import Cookies from "js-cookie";
 import { IProps } from "./types";
+import jwtDecode from "jwt-decode";
+import { Avatar } from "@mui/material";
+import { Message } from "../Message";
+
+interface IUser {
+  id: number;
+  name: string;
+}
 
 export const SideBar = (isCellphone: IProps) => {
   const [sizeButton, setSizeButton] = useState("60px");
@@ -16,6 +24,8 @@ export const SideBar = (isCellphone: IProps) => {
   const [arrow, setArrow] = useState("AiOutlineArrowRight");
   const [animationWidth, setAnimationWidth] = useState("");
   const [activateCellphone, setActivateCellphone] = useState(false);
+  const [user, setUser] = useState<IUser>();
+  const [color, setColor] = useState<string>();
   const navigate = useNavigate();
 
   const handleSizeSideBar = () => {
@@ -40,7 +50,29 @@ export const SideBar = (isCellphone: IProps) => {
     navigate("/");
   };
 
+  const navigateToProfile = () => {
+    navigate("/profile");
+  };
+
   const ButtonDices = Links(useNavigate(), justifyContent, sizeButton, message);
+
+  useEffect(() => {
+    const token = Cookies.get("token");
+    const colors = [
+      "#FF4136",
+      "#2ECC40",
+      "#0074D9",
+      "#FFDC00",
+      "#FF851B",
+      "#B10DC9",
+      "#7FDBFF",
+      "#001f3f",
+    ];
+    setColor(colors[Math.floor(Math.random() * colors.length)]);
+    if (token) {
+      setUser(jwtDecode(token));
+    }
+  }, []);
 
   return (
     <S.styledHeader animationWidth={animationWidth}>
@@ -87,16 +119,57 @@ export const SideBar = (isCellphone: IProps) => {
       </div>
       <div>
         {!isCellphone.cellphone ? (
-          <Button
-            Icon={() => <ImExit />}
-            width={sizeButton}
-            backgroundColor="#1c1c1c"
-            backgroundHover="#494949"
-            border="none"
-            margin="0px 0px 20px 0px"
-            onClick={Exit}
-            justifyContent="center"
-          />
+          <>
+            {user && (
+              <div
+                style={{
+                  width: "100%",
+                  display: "flex",
+                  alignItems: "flex-start",
+                  justifyContent: "center",
+                }}
+              >
+                <div
+                  style={{
+                    width: "50px",
+                    display: "flex",
+                    flexDirection: "row",
+                    cursor: "pointer",
+                    alignItems: "center",
+                    columnGap: "10px",
+                    marginLeft: "14px",
+                  }}
+                  onClick={navigateToProfile}
+                >
+                  <Avatar
+                    sx={{ bgcolor: color, width: "20px", height: "50px" }}
+                  >
+                    {user.name.charAt(0)}
+                  </Avatar>
+                  {message && (
+                    <Message
+                      message={user.name}
+                      fontSize="1.3em"
+                      fontFamily="Montserrat"
+                      color="#fff"
+                    />
+                  )}
+                </div>
+              </div>
+            )}
+
+            <Button
+              Icon={() => <ImExit />}
+              width={sizeButton}
+              message={message ? "Logout" : ""}
+              backgroundColor="#1c1c1c"
+              backgroundHover="#494949"
+              border="none"
+              margin="0px 0px 20px 0px"
+              onClick={Exit}
+              justifyContent="center"
+            />
+          </>
         ) : (
           ""
         )}
