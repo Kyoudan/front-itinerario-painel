@@ -28,6 +28,8 @@ export const Admin = () => {
   const [adminCount, setAdminCount] = useState<number>(0);
   const [search, setSearch] = useState<string>("");
   const [isSearch, setIsSearch] = useState<boolean>(false);
+  const [limitFind, setLimitFind] = useState<number>();
+  const [height, setHeight] = useState<number>(window.innerHeight);
 
   const TitleStyle = {
     color: "#ff5c5c",
@@ -56,7 +58,7 @@ export const Admin = () => {
     try {
       setIsSearch(false);
       const result: IAxios = await api.get(
-        `/admins?limit=6&init=${
+        `/admins?limit=${limitFind}&init=${
           typeof count === "number" && count! >= 0 ? count : page
         }&find=${search}`,
         {
@@ -78,7 +80,7 @@ export const Admin = () => {
       if (search) {
         setIsSearch(true);
         const result: IAxios = await api.get(
-          `/admins?limit=6&init=${
+          `/admins?limit=${limitFind}&init=${
             typeof count === "number" && count! >= 0 ? count : page
           }&find=${search}`,
           {
@@ -96,15 +98,19 @@ export const Admin = () => {
   };
 
   const handleNextPage = () => {
-    let count = page + 7;
-    setPage(count);
-    handleGetAllTags(count);
+    if (limitFind) {
+      let count = page + limitFind;
+      setPage(count);
+      handleGetAllTags(count);
+    }
   };
 
   const handleBackPage = () => {
-    let count = page - 7;
-    setPage(count);
-    handleGetAllTags(count);
+    if (limitFind) {
+      let count = page - limitFind;
+      setPage(count);
+      handleGetAllTags(count);
+    }
   };
 
   const handleChangePagination = (e: unknown, page: number) => {
@@ -117,9 +123,32 @@ export const Admin = () => {
     }
   };
 
+  const verifyHeight = () => {
+    console.log(height);
+    if (height > 900) {
+      setLimitFind(7);
+    } else if (height > 881) {
+      setLimitFind(6);
+    } else if (height < 881 && height > 801) {
+      setLimitFind(5);
+    } else if (height < 801 && height > 701) {
+      setLimitFind(4);
+    } else if (height < 801 && height > 610) {
+      setLimitFind(3);
+    } else if (height < 601 && height > 500) {
+      setLimitFind(2);
+    } else if (height < 500 && height > 400) {
+      setLimitFind(1);
+    }
+  };
+
+  useEffect(() => {
+    verifyHeight();
+  }, []);
+
   useEffect(() => {
     handleGetAllTags();
-  }, []);
+  }, [limitFind]);
 
   return (
     <Container>
@@ -158,11 +187,11 @@ export const Admin = () => {
                   </TableBody>
                 </Table>
               </TableContainer>
-              {!isSearch && (
+              {!isSearch && limitFind && (
                 <TablePagination
-                  rowsPerPageOptions={[7]}
+                  rowsPerPageOptions={[limitFind]}
                   component="div"
-                  rowsPerPage={7}
+                  rowsPerPage={limitFind}
                   page={pageNow}
                   count={adminCount}
                   onPageChange={handleChangePagination}

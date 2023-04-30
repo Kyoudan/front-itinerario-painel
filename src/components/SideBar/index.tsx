@@ -2,7 +2,7 @@ import * as S from "./style";
 import { Links } from "./Links";
 import { useNavigate } from "react-router";
 import { Button } from "../Button";
-import { useEffect, useState } from "react";
+import { useEffect, useState, Dispatch, SetStateAction } from "react";
 import { AiOutlineArrowRight, AiOutlineArrowLeft } from "react-icons/ai";
 import { ImExit } from "react-icons/im";
 import { BsList } from "react-icons/bs";
@@ -16,9 +16,12 @@ interface IUser {
   id: number;
   name: string;
   image: string;
+  email: string;
+  iat: number;
+  exp: number;
 }
 
-export const SideBar = (isCellphone: IProps) => {
+export const SideBar = ({ cellphone, image }: IProps) => {
   const [sizeButton, setSizeButton] = useState("60px");
   const [justifyContent, setJustifyContent] = useState("center");
   const [message, setMessage] = useState(false);
@@ -27,6 +30,7 @@ export const SideBar = (isCellphone: IProps) => {
   const [activateCellphone, setActivateCellphone] = useState(false);
   const [user, setUser] = useState<IUser>();
   const [color, setColor] = useState<string>();
+  const [reloadImage, setReloadImage] = useState<string>();
   const navigate = useNavigate();
 
   const handleSizeSideBar = () => {
@@ -60,23 +64,45 @@ export const SideBar = (isCellphone: IProps) => {
   useEffect(() => {
     const token = Cookies.get("token");
     const color = Cookies.get("color");
+    const reloadImage = Cookies.get("reloadImageProfile");
     if (token) {
       setUser(jwtDecode(token));
     }
     if (color) {
       setColor(color);
     }
+    if (reloadImage) {
+      setReloadImage(reloadImage);
+    }
   }, []);
+
+  useEffect(() => {
+    if (image && typeof image === "string") {
+      setUser((prevState) => {
+        if (prevState) {
+          return {
+            name: prevState.name,
+            id: prevState.id,
+            email: prevState.email,
+            exp: prevState.exp,
+            iat: prevState.iat,
+            image: image,
+          };
+        }
+        return;
+      });
+    }
+  }, [image]);
 
   return (
     <S.styledHeader animationWidth={animationWidth}>
       <div>
-        {isCellphone.cellphone
+        {cellphone
           ? ButtonDices.map((item) => (
               <S.styledDiv key={item.name}>{item.button}</S.styledDiv>
             ))
           : ""}
-        {!isCellphone.cellphone ? (
+        {!cellphone ? (
           <Button
             margin="20px 0px 0px 0px"
             width={sizeButton}
@@ -105,14 +131,14 @@ export const SideBar = (isCellphone: IProps) => {
             Icon={() => <BsList />}
           />
         )}
-        {!isCellphone.cellphone
+        {!cellphone
           ? ButtonDices.map((item) => (
               <S.styledDiv key={item.name}>{item.button}</S.styledDiv>
             ))
           : ""}
       </div>
       <div>
-        {!isCellphone.cellphone ? (
+        {!cellphone ? (
           <>
             {user && (
               <div
@@ -133,11 +159,11 @@ export const SideBar = (isCellphone: IProps) => {
                     columnGap: "10px",
                     marginLeft: "14px",
                   }}
-                  onClick={navigateToProfile}
                 >
                   {!user.image ? (
                     <Avatar
                       sx={{ bgcolor: color, width: "20px", height: "50px" }}
+                      onClick={navigateToProfile}
                     >
                       {user.name.charAt(0)}{" "}
                     </Avatar>
@@ -148,7 +174,8 @@ export const SideBar = (isCellphone: IProps) => {
                         height: "50px",
                       }}
                       alt={user.name}
-                      src={user.image}
+                      src={reloadImage ? reloadImage : user.image}
+                      onClick={navigateToProfile}
                     />
                   )}
 

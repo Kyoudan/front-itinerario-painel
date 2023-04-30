@@ -14,11 +14,12 @@ import {
 import * as S from "./style";
 import { AiFillDelete } from "react-icons/ai";
 import { Button } from "../../components/Button";
-import { useEffect, useState, MouseEvent } from "react";
+import { useEffect, useState, MouseEvent, useContext } from "react";
 import { api } from "../../api/api";
 import Cookies from "js-cookie";
 import { IAxios, ITags } from "./types";
 import { SearchBar } from "../../components/SearchBar";
+import { AuthContext } from "../../contexts/AuthContext/AuthContext";
 
 export const Tags = () => {
   const [tags, setTags] = useState<ITags[]>();
@@ -27,17 +28,17 @@ export const Tags = () => {
   const [tagsCount, setTagsCount] = useState<number>(0);
   const [search, setSearch] = useState<string>("");
   const [isSearch, setIsSearch] = useState<boolean>(false);
+  const [limitFind, setLimitFind] = useState<number>();
+  const [height, setHeight] = useState<number>(window.innerHeight);
 
   const TitleStyle = {
     color: "#ff5c5c",
     fontFamily: "Montserrat",
-    fontSize: "1.9em",
+    fontSize: "1.3em",
   };
 
   const ContainerStyle = {
-    maxHeight: "100%",
-    maxWidth: "100%",
-    minWidth: "100%",
+    maxHeight: "95%",
     backgroundColor: "#1c1c1c",
   };
 
@@ -48,14 +49,15 @@ export const Tags = () => {
   const contentStyle = {
     color: "#fff",
     fontFamily: "Montserrat",
-    fontSize: "1.5em",
+    fontSize: "1.3em",
   };
 
   const handleGetAllTags = async (count?: number) => {
     try {
       setIsSearch(false);
+      console.log(limitFind);
       const result: IAxios = await api.get(
-        `/posttags?limit=7&init=${
+        `/posttags?limit=${limitFind}&init=${
           typeof count === "number" && count! >= 0 ? count : page
         }&find=${search}`,
         {
@@ -64,6 +66,7 @@ export const Tags = () => {
           },
         }
       );
+      console.log(result);
       setTags(result.data.data);
       setTagsCount(result.data.count);
     } catch {}
@@ -77,7 +80,7 @@ export const Tags = () => {
       if (search) {
         setIsSearch(true);
         const result: IAxios = await api.get(
-          `/posttags?limit=7&init=${
+          `/posttags?limit=${limitFind}&init=${
             typeof count === "number" && count! >= 0 ? count : page
           }&find=${search}`,
           {
@@ -95,15 +98,19 @@ export const Tags = () => {
   };
 
   const handleNextPage = () => {
-    let count = page + 7;
-    setPage(count);
-    handleGetAllTags(count);
+    if (limitFind) {
+      let count = page + limitFind;
+      setPage(count);
+      handleGetAllTags(count);
+    }
   };
 
   const handleBackPage = () => {
-    let count = page - 7;
-    setPage(count);
-    handleGetAllTags(count);
+    if (limitFind) {
+      let count = page - limitFind;
+      setPage(count);
+      handleGetAllTags(count);
+    }
   };
 
   const handleChangePagination = (e: unknown, page: number) => {
@@ -115,10 +122,32 @@ export const Tags = () => {
       handleBackPage();
     }
   };
+  const verifyHeight = () => {
+    console.log(height);
+    if (height > 900) {
+      setLimitFind(7);
+    } else if (height > 881) {
+      setLimitFind(6);
+    } else if (height < 881 && height > 801) {
+      setLimitFind(5);
+    } else if (height < 801 && height > 701) {
+      setLimitFind(4);
+    } else if (height < 801 && height > 610) {
+      setLimitFind(3);
+    } else if (height < 601 && height > 500) {
+      setLimitFind(2);
+    } else if (height < 500 && height > 400) {
+      setLimitFind(1);
+    }
+  };
+
+  useEffect(() => {
+    verifyHeight();
+  }, []);
 
   useEffect(() => {
     handleGetAllTags();
-  }, []);
+  }, [limitFind]);
 
   return (
     <Container>
@@ -168,11 +197,11 @@ export const Tags = () => {
                 </TableBody>
               </Table>
             </TableContainer>
-            {!isSearch && (
+            {!isSearch && limitFind && (
               <TablePagination
-                rowsPerPageOptions={[7]}
+                rowsPerPageOptions={[limitFind]}
                 component="div"
-                rowsPerPage={7}
+                rowsPerPage={limitFind}
                 page={pageNow}
                 count={tagsCount}
                 onPageChange={handleChangePagination}

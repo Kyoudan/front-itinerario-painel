@@ -31,5 +31,7 @@ export interface IUserContext {
       exp?: number;
     }>
   >;
+  setHeight: Dispatch<SetStateAction<number>>;
   VerifyToken: () => Promise<void>;
+  height?: number;
 }

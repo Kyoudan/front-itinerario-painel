@@ -5,12 +5,14 @@ import jwtDecode from "jwt-decode";
 export const AuthContext = createContext<IUserContext>({
   user: {},
   setUser: () => {},
+  setHeight: () => {},
   VerifyToken: () => Promise.resolve(),
 });
 
 export const AuthProvider = ({ children }: IProps) => {
   const [user, setUser] = useState({});
   const [cellphone, setCellphoneContext] = useState(false);
+  const [height, setHeight] = useState<number>(0);
 
   const VerifyToken = async () => {
     try {
@@ -26,7 +28,15 @@ export const AuthProvider = ({ children }: IProps) => {
 
   return (
     <AuthContext.Provider
-      value={{ user, setUser, VerifyToken, setCellphoneContext, cellphone }}
+      value={{
+        user,
+        setUser,
+        VerifyToken,
+        setCellphoneContext,
+        cellphone,
+        setHeight,
+        height,
+      }}
     >
       {children}
     </AuthContext.Provider>

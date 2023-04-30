@@ -17,6 +17,7 @@ export const Profile = () => {
   const [image, setImage] = useState<string>();
   const [disableImage, setDisableImage] = useState<boolean>(true);
   const [loadingImage, setLoadingImage] = useState<boolean>(false);
+  const [imageContainer, setImageContainer] = useState<string>("");
 
   const style = {
     width: "90%",
@@ -107,6 +108,11 @@ export const Profile = () => {
           },
         }
       );
+      if (image) {
+        setImageContainer(image);
+        Cookies.remove("reloadImageProfile");
+        Cookies.set("reloadImageProfile", image);
+      }
       getAllDices();
       setLoadingImage(false);
       setModalUpdateImage(false);
@@ -128,7 +134,7 @@ export const Profile = () => {
   }, [image]);
 
   return (
-    <Container>
+    <Container image={imageContainer}>
       <S.styledDiv>
         {user && date ? (
           <Box sx={style}>

@@ -33,6 +33,8 @@ export const Postagens = () => {
   const [postsCount, setPostsCount] = useState<number>(0);
   const [search, setSearch] = useState<string>("");
   const [isSearch, setIsSearch] = useState<boolean>(false);
+  const [limitFind, setLimitFind] = useState<number>();
+  const [height, setHeight] = useState<number>(window.innerHeight);
 
   const TitleStyle = {
     color: "#ff5c5c",
@@ -41,7 +43,7 @@ export const Postagens = () => {
   };
 
   const ContainerStyle = {
-    maxHeight: "100%",
+    maxHeight: "85%",
     maxWidth: "100%",
     minWidth: "100%",
     backgroundColor: "#1c1c1c",
@@ -62,7 +64,7 @@ export const Postagens = () => {
       setLoading(true);
       setIsSearch(false);
       const result = await api.get(
-        `/post?limit=7&init=${
+        `/post?limit=${limitFind}&init=${
           typeof count === "number" && count! >= 0 ? count : page
         }&find=${search}`,
         {
@@ -86,7 +88,7 @@ export const Postagens = () => {
         setIsSearch(true);
         console.log(search);
         const result = await api.get(
-          `/post?limit=7&init=${
+          `/post?limit=${limitFind}&init=${
             typeof count === "number" && count! >= 0 ? count : page
           }&find=${search}`,
           {
@@ -104,15 +106,19 @@ export const Postagens = () => {
   };
 
   const handleNextPage = () => {
-    let count = page + 7;
-    setPage(count);
-    handleGetAllPosts(count);
+    if (limitFind) {
+      let count = page + limitFind;
+      setPage(count);
+      handleGetAllPosts(count);
+    }
   };
 
   const handleBackPage = () => {
-    let count = page - 7;
-    setPage(count);
-    handleGetAllPosts(count);
+    if (limitFind) {
+      let count = page - limitFind;
+      setPage(count);
+      handleGetAllPosts(count);
+    }
   };
 
   const handleChangePagination = (e: unknown, page: number) => {
@@ -130,18 +136,32 @@ export const Postagens = () => {
     navigate(`/postagens/${link.route}`);
   };
 
+  const verifyHeight = () => {
+    if (height > 900) {
+      setLimitFind(7);
+    } else if (height > 881) {
+      setLimitFind(6);
+    } else if (height < 881 && height > 801) {
+      setLimitFind(5);
+    } else if (height < 801 && height > 701) {
+      setLimitFind(4);
+    } else if (height < 801 && height > 610) {
+      setLimitFind(3);
+    } else if (height < 601 && height > 500) {
+      setLimitFind(2);
+    } else if (height < 500 && height > 400) {
+      setLimitFind(1);
+    }
+  };
+
   useEffect(() => {
     VerifyToken();
-    handleGetAllPosts();
+    verifyHeight();
   }, []);
 
   useEffect(() => {
-    console.log(search);
-  }, [search]);
-
-  useEffect(() => {
-    console.log(cellphone);
-  }, [cellphone]);
+    handleGetAllPosts();
+  }, [limitFind]);
 
   return user ? (
     <Container>
@@ -225,11 +245,11 @@ export const Postagens = () => {
                 </TableBody>
               </Table>
             </TableContainer>
-            {!isSearch && (
+            {!isSearch && limitFind && (
               <TablePagination
-                rowsPerPageOptions={[7]}
+                rowsPerPageOptions={[limitFind]}
                 component="div"
-                rowsPerPage={7}
+                rowsPerPage={limitFind}
                 page={pageNow}
                 count={postsCount}
                 onPageChange={handleChangePagination}

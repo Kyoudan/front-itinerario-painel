@@ -4,13 +4,14 @@ import * as S from "./style";
 import { AuthContext } from "../../contexts/AuthContext/AuthContext";
 
 interface IProps {
-  children: ReactNode;
+  children?: ReactNode;
+  image?: string;
 }
 
-export const Container = ({ children }: IProps) => {
+export const Container = ({ children, image }: IProps) => {
   const [cellphone, setCellphone] = useState(false);
   const [width, setWidth] = useState(window.innerWidth);
-  const { setCellphoneContext } = useContext(AuthContext);
+  const { setCellphoneContext, setHeight } = useContext(AuthContext);
 
   const VerifyPlataform = () => {
     if (width < 600) {
@@ -29,6 +30,7 @@ export const Container = ({ children }: IProps) => {
   useEffect(() => {
     function handleResize() {
       setWidth(window.innerWidth);
+      setHeight(window.innerHeight);
       VerifyPlataform();
     }
 
@@ -38,7 +40,7 @@ export const Container = ({ children }: IProps) => {
 
   return (
     <S.styledDiv cellphone={cellphone}>
-      <SideBar cellphone={cellphone} />
+      <SideBar cellphone={cellphone} image={image}/>
       {children}
     </S.styledDiv>
   );
