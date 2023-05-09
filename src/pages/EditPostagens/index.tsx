@@ -43,6 +43,8 @@ export const EditPostagens = () => {
   const [view, setView] = useState(false);
   const [reload, setReload] = useState<number>(1);
   const [deleteSectionId, setDeleteSectionId] = useState<number>();
+  const [viewPosts, setViewPosts] = useState<boolean>(true);
+  const [image, setImage] = useState<string>();
   const [openModelDeleteField, setOpenModelDeleteField] =
     useState<boolean>(false);
   const { user, VerifyToken } = useContext(AuthContext);
@@ -96,6 +98,7 @@ export const EditPostagens = () => {
         setTextDescription(result.data.data.description);
         setTextTitle(result.data.data.name);
         setAuthor(result.data.data.author);
+        setImage(result.data.data.image);
       }
     } catch (err) {
       console.log(err);
@@ -190,6 +193,7 @@ export const EditPostagens = () => {
             color: textColor,
             id: post.data.id,
             content: text,
+            image: image,
           },
           {
             headers: {
@@ -244,6 +248,7 @@ export const EditPostagens = () => {
           uuid={slug}
           setReload={setReload}
           finished={post?.data.finished}
+          viewPosts={setViewPosts}
         />
         {post ? (
           <S.styledDivContent>
@@ -255,117 +260,145 @@ export const EditPostagens = () => {
             />
             {!view ? (
               <S.styledDivOverflow>
-                <Input
-                  width="97%"
-                  label="Titulo"
-                  height="50px"
-                  sizeHeight="50"
-                  margin="0"
-                  onText={(e) => setTextTitle(e.target.value)}
-                  value={textTitle}
-                  mediaCustom="width: 95%"
-                />
-                <Input
-                  width="97%"
-                  label="Descrição"
-                  height="50px"
-                  sizeHeight="50"
-                  onText={(e) => setTextDescription(e.target.value)}
-                  value={textDescription}
-                  margin="0"
-                  mediaCustom="width: 95%"
-                />
-                <Input
-                  width="97%"
-                  label="Autor"
-                  height="50px"
-                  sizeHeight="50"
-                  onText={(e) => setAuthor(e.target.value)}
-                  value={author}
-                  margin="0"
-                  mediaCustom="width: 95%"
-                />
-
-                <S.styledDivInputColor>
-                  <Message
-                    message="Cor: "
-                    fontFamily="Montserrat"
-                    color="#ff0101"
-                    fontSize="0.8em"
-                    margin="0px 0px 0px 10px"
-                  />
-                  <Input
-                    width="66px"
-                    height="50px"
-                    sizeHeight="50"
-                    onText={(e) => handleTextColor(e.target.value)}
-                    value={textColor}
-                    margin="0"
-                    border="0"
-                    mediaCustom="width: 95%"
-                    type="color"
-                  />
-                </S.styledDivInputColor>
-
-                {post.data.PostContent.map((item) =>
-                  text[item.id] ? (
-                    <S.styledDivRenderContent label={item.type} key={item.id}>
-                      <S.styledTextArea
-                        id={`textarea${item.id}`}
-                        key={item.id}
-                        type={item.type}
-                        fontSize={text[item.id].size}
-                        onChange={(e) =>
-                          handleChange(e, item, text[item.id].size, item.type)
-                        }
-                        value={text[item.id].text}
-                      />
-                      <S.styledDivButton>
-                        <Button
-                          width="50px"
-                          height="50px"
-                          Icon={() => <AiFillDelete />}
-                          color="black"
-                          justifyContent="center"
-                          border="1px solid #494949"
-                          backgroundHover="#ff7b7b"
-                          onClick={() => handleDeleteSection(item.id)}
-                        />
-
-                        {item.type != "image" ? (
-                          <Input
-                            label="Size"
-                            width="50px"
-                            height="50px"
-                            type="number"
-                            sizeHeight="50"
-                            onText={(e) =>
-                              handleChangeSize(item, parseFloat(e.target.value))
-                            }
-                            padding="0"
-                            value={text[item.id].size}
-                            labelActive={true}
-                            textAlign="center"
-                            fontSize="1.1em"
-                            max={3}
-                          />
-                        ) : (
-                          <img
-                            src={text[item.id].text}
-                            width={50}
-                            height={50}
-                          ></img>
-                        )}
-                      </S.styledDivButton>
-                    </S.styledDivRenderContent>
-                  ) : (
-                    <Skeleton
-                      variant="rectangular"
+                {viewPosts ? (
+                  <>
+                    <Input
                       width="97%"
-                      height={200}
-                      style={{ borderRadius: "10px" }}
+                      label="Titulo"
+                      height="50px"
+                      sizeHeight="50"
+                      margin="0"
+                      onText={(e) => setTextTitle(e.target.value)}
+                      value={textTitle}
+                      mediaCustom="width: 95%"
                     />
-                  )
+                    <Input
+                      width="97%"
+                      label="Descrição"
+                      height="50px"
+                      sizeHeight="50"
+                      onText={(e) => setTextDescription(e.target.value)}
+                      value={textDescription}
+                      margin="0"
+                      mediaCustom="width: 95%"
+                    />
+                    <Input
+                      width="97%"
+                      label="Autor"
+                      height="50px"
+                      sizeHeight="50"
+                      onText={(e) => setAuthor(e.target.value)}
+                      value={author}
+                      margin="0"
+                      mediaCustom="width: 95%"
+                    />
+
+                    <Input
+                      width="97%"
+                      label="Imagem"
+                      height="50px"
+                      sizeHeight="50"
+                      onText={(e) => setImage(e.target.value)}
+                      value={image}
+                      margin="0"
+                      mediaCustom="width: 95%"
+                    />
+
+                    <S.styledDivInputColor>
+                      <Message
+                        message="Cor: "
+                        fontFamily="Montserrat"
+                        color="#ff0101"
+                        fontSize="0.8em"
+                        margin="0px 0px 0px 10px"
+                      />
+                      <Input
+                        width="66px"
+                        height="50px"
+                        sizeHeight="50"
+                        onText={(e) => handleTextColor(e.target.value)}
+                        value={textColor}
+                        margin="0"
+                        border="0"
+                        mediaCustom="width: 95%"
+                        type="color"
+                      />
+                    </S.styledDivInputColor>
+                  </>
+                ) : (
+                  <>
+                    {post.data.PostContent.map((item) =>
+                      text[item.id] ? (
+                        <S.styledDivRenderContent
+                          label={item.type}
+                          key={item.id}
+                        >
+                          <S.styledTextArea
+                            id={`textarea${item.id}`}
+                            key={item.id}
+                            type={item.type}
+                            fontSize={text[item.id].size}
+                            onChange={(e) =>
+                              handleChange(
+                                e,
+                                item,
+                                text[item.id].size,
+                                item.type
+                              )
+                            }
+                            value={text[item.id].text}
+                          />
+                          <S.styledDivButton>
+                            <Button
+                              width="50px"
+                              height="50px"
+                              Icon={() => <AiFillDelete />}
+                              color="black"
+                              justifyContent="center"
+                              border="1px solid #494949"
+                              backgroundHover="#ff7b7b"
+                              onClick={() => handleDeleteSection(item.id)}
+                            />
+
+                            {item.type != "image" ? (
+                              <Input
+                                label="Size"
+                                width="50px"
+                                height="50px"
+                                type="number"
+                                sizeHeight="50"
+                                onText={(e) =>
+                                  handleChangeSize(
+                                    item,
+                                    parseFloat(e.target.value)
+                                  )
+                                }
+                                padding="0"
+                                value={text[item.id].size}
+                                labelActive={true}
+                                textAlign="center"
+                                fontSize="1.1em"
+                                max={3}
+                              />
+                            ) : (
+                              <img
+                                src={text[item.id].text}
+                                width={50}
+                                height={50}
+                              ></img>
+                            )}
+                          </S.styledDivButton>
+                        </S.styledDivRenderContent>
+                      ) : (
+                        <Skeleton
+                          variant="rectangular"
+                          width="97%"
+                          height={200}
+                          style={{ borderRadius: "10px" }}
+                        />
+                      )
+                    )}
+                  </>
                 )}
               </S.styledDivOverflow>
             ) : (

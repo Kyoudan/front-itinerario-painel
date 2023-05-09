@@ -2,6 +2,7 @@ export interface IPosts {
   data: {
     id: number;
     name: string;
+    image: string;
     description: string;
     finished: boolean;
     color: string;
@@ -28,6 +29,7 @@ export interface IPostAxios {
       id: number;
       name: string;
       description: string;
+      image: string;
       finished: boolean;
       author: string;
       color: string;

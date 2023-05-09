@@ -22,7 +22,7 @@ import {
 import { CheckAnimate } from "../../../../components/CheckAnimation";
 import { ModalNewField } from "../ModalNewField";
 import { ModalPublish } from "../ModalPublish";
-import { MdOutlinePublish } from "react-icons/md";
+import { MdOutlinePublish, MdContentPasteGo } from "react-icons/md";
 
 interface IProps {
   isCheck?: boolean;
@@ -33,6 +33,7 @@ interface IProps {
   onClickButtonView?: MouseEventHandler;
   navigate?: NavigateFunction;
   onClick?: MouseEventHandler;
+  viewPosts: Dispatch<SetStateAction<boolean>>;
 }
 
 export const Header = ({
@@ -44,6 +45,7 @@ export const Header = ({
   uuid,
   setReload,
   finished,
+  viewPosts,
 }: IProps) => {
   const [check, setCheck] = useState(false);
   const [saveIconColor, setSaveIconColor] = useState<string>("#fff");
@@ -125,6 +127,16 @@ export const Header = ({
       </div>
 
       <div className="right classdiv">
+        <Button
+          Icon={() => <MdContentPasteGo />}
+          width="50px"
+          justifyContent="center"
+          backgroundColor="transparent"
+          border="1px solid #494949"
+          backgroundHover="#494949"
+          boxShadowHover="0px 0px 10px 3px #494949"
+          onClick={() => viewPosts((prevState) => !prevState)}
+        />
         <Button
           Icon={() => <BsFillEyeFill />}
           width="50px"
