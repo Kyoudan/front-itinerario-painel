@@ -92,13 +92,14 @@ export const EditPostagens = () => {
     try {
       const result: IPostAxios = await api.get(`/post/${slug}`);
       console.log(result);
+      console.log("Cor", result.data.color);
       if (result) {
         setPost(result.data);
-        setTextColor(result.data.data.color);
-        setTextDescription(result.data.data.description);
-        setTextTitle(result.data.data.name);
-        setAuthor(result.data.data.author);
-        setImage(result.data.data.image);
+        setTextColor(result.data.color);
+        setTextDescription(result.data.description);
+        setTextTitle(result.data.name);
+        setAuthor(result.data.author);
+        setImage(result.data.image);
       }
     } catch (err) {
       console.log(err);
@@ -153,7 +154,7 @@ export const EditPostagens = () => {
 
   const handleGetAllTextArea = () => {
     if (post) {
-      post.data.PostContent.map((item) => {
+      post.PostContent.map((item) => {
         handleTextHeight(item.id);
         setType(item.type);
 
@@ -191,7 +192,7 @@ export const EditPostagens = () => {
             description: textDescription,
             author: author,
             color: textColor,
-            id: post.data.id,
+            id: post.id,
             content: text,
             image: image,
           },
@@ -247,7 +248,7 @@ export const EditPostagens = () => {
           onClickButtonView={handleView}
           uuid={slug}
           setReload={setReload}
-          finished={post?.data.finished}
+          finished={post?.finished}
           viewPosts={setViewPosts}
         />
         {post ? (
@@ -327,7 +328,7 @@ export const EditPostagens = () => {
                   </>
                 ) : (
                   <>
-                    {post.data.PostContent.map((item) =>
+                    {post.PostContent.map((item) =>
                       text[item.id] ? (
                         <S.styledDivRenderContent
                           label={item.type}
