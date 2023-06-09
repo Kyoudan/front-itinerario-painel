@@ -34,7 +34,6 @@ export const EditPostagens = () => {
   const [post, setPost] = useState<IPosts>();
   const [textTitle, setTextTitle] = useState("");
   const [textDescription, setTextDescription] = useState("");
-  const [textColor, setTextColor] = useState("");
   const [author, setAuthor] = useState("");
   const [type, setType] = useState("");
   const [text, setText] = useState<IItemsContent[]>([]);
@@ -91,11 +90,8 @@ export const EditPostagens = () => {
   const handleGetPosts = async () => {
     try {
       const result: IPostAxios = await api.get(`/post/${slug}`);
-      console.log(result);
-      console.log("Cor", result.data.color);
       if (result) {
         setPost(result.data);
-        setTextColor(result.data.color);
         setTextDescription(result.data.description);
         setTextTitle(result.data.name);
         setAuthor(result.data.author);
@@ -191,7 +187,6 @@ export const EditPostagens = () => {
             title: textTitle,
             description: textDescription,
             author: author,
-            color: textColor,
             id: post.id,
             content: text,
             image: image,
@@ -215,13 +210,6 @@ export const EditPostagens = () => {
     }
   };
 
-  const handleTextColor = useCallback((newColor: string) => {
-    const timer = setTimeout(() => {
-      setTextColor(newColor);
-    }, 1000);
-
-    return () => clearTimeout(timer);
-  }, []);
 
   useEffect(() => {
     VerifyToken();
@@ -304,27 +292,6 @@ export const EditPostagens = () => {
                       margin="0"
                       mediaCustom="width: 95%"
                     />
-
-                    <S.styledDivInputColor>
-                      <Message
-                        message="Cor: "
-                        fontFamily="Montserrat"
-                        color="#ff0101"
-                        fontSize="0.8em"
-                        margin="0px 0px 0px 10px"
-                      />
-                      <Input
-                        width="66px"
-                        height="50px"
-                        sizeHeight="50"
-                        onText={(e) => handleTextColor(e.target.value)}
-                        value={textColor}
-                        margin="0"
-                        border="0"
-                        mediaCustom="width: 95%"
-                        type="color"
-                      />
-                    </S.styledDivInputColor>
                   </>
                 ) : (
                   <>

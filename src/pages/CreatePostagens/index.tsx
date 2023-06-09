@@ -24,7 +24,6 @@ export const CreatePostagens = () => {
   const [title, setTitle] = useState<string>();
   const [description, setDescription] = useState<string>();
   const [type, setType] = useState<number>(1);
-  const [color, setColor] = useState<string>("#000");
   const [disabled, setDisabled] = useState<boolean>(true);
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -46,7 +45,6 @@ export const CreatePostagens = () => {
         "/post",
         {
           name: title,
-          color,
           postTagsId: type,
           description,
         },
@@ -66,10 +64,10 @@ export const CreatePostagens = () => {
 
   useEffect(() => {
     console.log(type);
-    if (title && description && type && color) {
+    if (title && description && type) {
       setDisabled(false);
     }
-  }, [title, description, type, color]);
+  }, [title, description, type]);
 
   useEffect(() => {
     handleGetCategories();
@@ -124,23 +122,6 @@ export const CreatePostagens = () => {
                 flexDirection: "column",
               }}
             >
-              <Message
-                message="Cor:"
-                fontFamily="sans-serif"
-                fontSize="1em"
-                color="#808080"
-                margin="0px 0px 0px 15px"
-              />
-              <Input
-                width="66px"
-                height="50px"
-                sizeHeight="50"
-                margin="0"
-                border="0"
-                mediaCustom="width: 95%"
-                type="color"
-                onText={(e) => setColor(e.target.value)}
-              />
             </div>
             {!loading ? (
               <Button
