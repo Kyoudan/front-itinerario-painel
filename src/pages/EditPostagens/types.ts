@@ -29,6 +29,7 @@ export interface IPostContent {
   content: string;
   type: string;
   size: number;
+  reference: string;
 }
 
 export interface IStyledTextArea {

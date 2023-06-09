@@ -22,6 +22,8 @@ import { ModalDeleteField } from "./components/ModalDeleteField";
 import { Skeleton } from "@mui/material";
 import { ViewPosts } from "./components/View";
 import { MessageBalloon } from "../../hooks/Message";
+import { IoIosOptions } from "react-icons/io";
+import { ModalConfigImage } from "./components/ModalConfigImage";
 
 interface IItemsContent {
   id: number;
@@ -47,9 +49,25 @@ export const EditPostagens = () => {
   const [image, setImage] = useState<string>();
   const [openModelDeleteField, setOpenModelDeleteField] =
     useState<boolean>(false);
+  const [openModalConfigImage, setOpenModalConfigImage] =
+    useState<boolean>(false);
+  const [imageModal, setImageModal] = useState<string>("");
+  const [referenceImageModal, setReferenceImageModal] = useState<string>("");
+  const [idImageModal, setIdImageModal] = useState<number>();
   const { user, VerifyToken } = useContext(AuthContext);
   const { element, handleClick } = MessageBalloon();
   const navigate = useNavigate();
+
+  const handleModalConfigImage = (
+    image: string,
+    reference: string,
+    id: number
+  ) => {
+    setOpenModalConfigImage(true);
+    setImageModal(image);
+    setReferenceImageModal(reference);
+    setIdImageModal(id);
+  };
 
   const handleDeleteSection = (id: number) => {
     setDeleteSectionId(id);
@@ -231,6 +249,7 @@ export const EditPostagens = () => {
 
   useEffect(() => {
     handleGetAllTextArea();
+    console.log(post);
   }, [post]);
 
   return user && slug ? (
@@ -255,6 +274,14 @@ export const EditPostagens = () => {
               onClose={async () => setOpenModelDeleteField(false)}
               id={deleteSectionId}
               setReload={setReload}
+            />
+            <ModalConfigImage
+              open={openModalConfigImage}
+              onClose={async () => setOpenModalConfigImage(false)}
+              setReload={setReload}
+              image={imageModal}
+              reference={referenceImageModal}
+              id={idImageModal!}
             />
             {!view ? (
               <S.styledDivOverflow>
@@ -358,11 +385,23 @@ export const EditPostagens = () => {
                                 max={3}
                               />
                             ) : (
-                              <img
-                                src={text[item.id].text}
-                                width={50}
-                                height={50}
-                              ></img>
+                              <Button
+                                width="50px"
+                                height="50px"
+                                Icon={() => <IoIosOptions />}
+                                color="black"
+                                justifyContent="center"
+                                border="1px solid #494949"
+                                backgroundHover="#b0b0b0"
+                                onClick={() =>
+                                  handleModalConfigImage(
+                                    item.content,
+                                    item.reference,
+                                    item.id
+                                  )
+                                }
+                                margin="10px 0 0 0"
+                              />
                             )}
                           </S.styledDivButton>
                         </S.styledDivRenderContent>
