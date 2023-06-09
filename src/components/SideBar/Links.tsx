@@ -76,7 +76,7 @@ export const Links = (
           border="none"
           backgroundHover="#494949"
           Icon={() => <IoPersonCircle />}
-          onClick={handleClick("/users")}
+          onClick={handleClick("/admin")}
           justifyContent={justify}
         />
       ),

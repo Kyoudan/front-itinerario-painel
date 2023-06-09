@@ -8,7 +8,6 @@ import { CreatePostagens } from "../pages/CreatePostagens";
 import { EditPostagens } from "../pages/EditPostagens";
 import { Tags } from "../pages/Tags";
 import { TagsCreate } from "../pages/TagsCreate";
-import { Users } from "../pages/Users";
 import { AdminCreate } from "../pages/AdminCreate";
 import { Admin } from "../pages/Admin";
 import { Profile } from "../pages/Profile";
@@ -71,15 +70,6 @@ export const RoutesProject = () => {
             </PrivateRoute>
           }
           path="/tags/create"
-        />
-
-        <Route
-          element={
-            <PrivateRoute>
-              <Users />
-            </PrivateRoute>
-          }
-          path="/users"
         />
 
         <Route

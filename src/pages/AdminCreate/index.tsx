@@ -1,5 +1,5 @@
 import { Container } from "../../components/Container";
-import { Header } from "../Users/components/Header";
+import { Header } from "../Admin/Header";
 import { useNavigate } from "react-router";
 import * as S from "./style";
 import { useEffect, useState, ChangeEvent } from "react";
@@ -55,7 +55,7 @@ export const AdminCreate = () => {
   }, [name, email, userPassword, confirmPassword]);
 
   const cancelEnterPassword = () => {
-    navigate("/users");
+    navigate("/admin");
   };
 
   const enterPassword = () => {

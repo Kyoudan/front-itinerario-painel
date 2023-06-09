@@ -1,5 +1,5 @@
 import { NavigateFunction } from "react-router";
-import { Button } from "../../../../components/Button";
+import { Button } from "../../../components/Button";
 import * as S from "./style";
 import { Menu, MenuItem } from "@mui/material";
 import { MouseEvent, useState } from "react";
@@ -23,17 +23,7 @@ export const Header = ({ navigate }: IProps) => {
   return (
     <S.styledDiv>
       <Button
-        message="Usuarios"
-        width="200px"
-        justifyContent="center"
-        backgroundColor="transparent"
-        border="none"
-        backgroundHover="#494949"
-        boxShadowHover="0px 0px 10px 3px #494949"
-        onClick={() => navigate("/users")}
-      />
-      <Button
-        message="Administradores"
+        message="Configurações"
         width="200px"
         justifyContent="center"
         backgroundColor="transparent"

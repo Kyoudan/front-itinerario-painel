@@ -1,5 +1,5 @@
 import { Container } from "../../components/Container";
-import { Header } from "../Users/components/Header";
+import { Header } from "./Header";
 import { useNavigate } from "react-router";
 import * as S from "./style";
 import { useState, useEffect, MouseEvent } from "react";
