@@ -43,7 +43,7 @@ export const Postagens = () => {
   };
 
   const ContainerStyle = {
-    maxHeight: "85%",
+    maxHeight: "95%",
     maxWidth: "100%",
     minWidth: "100%",
     backgroundColor: "#1c1c1c",
