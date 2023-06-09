@@ -26,7 +26,7 @@ export const CreatePostagens = () => {
   const [type, setType] = useState<number>(1);
   const [disabled, setDisabled] = useState<boolean>(true);
   const [loading, setLoading] = useState<boolean>(false);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleGetCategories = async () => {
     try {
@@ -57,7 +57,7 @@ export const CreatePostagens = () => {
       );
       console.log(result);
       setLoading(false);
-      navigate(`/postagens/${result.data.uuid}`)
+      navigate(`/postagens/${result.data.uuid}`);
     } catch (err) {
       console.log(err);
       setLoading(false);
@@ -65,8 +65,7 @@ export const CreatePostagens = () => {
   };
 
   useEffect(() => {
-    console.log(type);
-    if (title && description && type) {
+    if (title && description && type && description.length <= 100) {
       setDisabled(false);
     }
   }, [title, description, type]);
@@ -95,6 +94,13 @@ export const CreatePostagens = () => {
               style={{ width: "50%" }}
               label="Descrição"
               onChange={(e) => setDescription(e.target.value)}
+              helperText={
+                description && description.length > 99
+                  ? "Maximo 100"
+                  : undefined
+              }
+              error={description && description.length > 99 ? true : false}
+              multiline={true}
             />
 
             <FormControl style={{ width: "50%" }}>
@@ -123,8 +129,7 @@ export const CreatePostagens = () => {
                 display: "flex",
                 flexDirection: "column",
               }}
-            >
-            </div>
+            ></div>
             {!loading ? (
               <Button
                 variant="outlined"
