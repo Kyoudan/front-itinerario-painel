@@ -26,6 +26,7 @@ export const CreatePostagens = () => {
   const [type, setType] = useState<number>(1);
   const [disabled, setDisabled] = useState<boolean>(true);
   const [loading, setLoading] = useState<boolean>(false);
+  const navigate = useNavigate()
 
   const handleGetCategories = async () => {
     try {
@@ -56,6 +57,7 @@ export const CreatePostagens = () => {
       );
       console.log(result);
       setLoading(false);
+      navigate(`/postagens/${result.data.uuid}`)
     } catch (err) {
       console.log(err);
       setLoading(false);
