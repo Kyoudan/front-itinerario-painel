@@ -24,6 +24,7 @@ export const ModalNewField = ({ open, onClose, uuid, setReload }: IProps) => {
   const [type, setType] = useState<string>("text");
   const [size, setSize] = useState<number>();
   const [loading, setLoading] = useState<boolean>(false);
+  const [reference, setReference] = useState<string>("")
 
   useEffect(() => {
     console.log(content, type, size);
@@ -50,6 +51,7 @@ export const ModalNewField = ({ open, onClose, uuid, setReload }: IProps) => {
         type,
         size: qSize,
         postId: uuid,
+        reference,
       });
       setReload((prevState) => {
         return prevState + 1;
@@ -101,6 +103,16 @@ export const ModalNewField = ({ open, onClose, uuid, setReload }: IProps) => {
                 min: 1,
                 max: 3,
               }}
+            />
+          )}
+          {type == "image" && (
+            <TextField
+              id="outlined-basic"
+              label="Referencia"
+              variant="outlined"
+              style={{ width: "100%" }}
+              sx={{ color: "primary.main" }}
+              onChange={(e) => setReference(e.target.value)}
             />
           )}
           {!loading ? (
