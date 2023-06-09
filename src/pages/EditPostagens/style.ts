@@ -16,8 +16,8 @@ export const styledDivContent = styled.div`
 `;
 
 export const styledDivOverflow = styled.div`
-  width: 1700px;
-  height: 80vh;
+  width: 99%;
+  height: 86vh;
   padding-top: 10px;
   padding-bottom: 10px;
   margin-bottom: 10px;
