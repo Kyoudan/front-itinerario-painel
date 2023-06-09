@@ -1,61 +1,40 @@
-import { useEffect, useState } from "react";
+import { SyntheticEvent, useEffect, useState } from "react";
 import * as S from "./style";
+import { Alert, Snackbar } from "@mui/material";
+import { Message } from "./types";
 
 export const MessageBalloon = () => {
+  const [open, setOpen] = useState<boolean>();
   const [message, setMessage] = useState<string>();
-  const [visible, setVisible] = useState<boolean>();
-  const [type, setType] = useState<string>();
-  const [color, setColor] = useState<string>();
-  const [title, setTitle] = useState<string>();
-  const [fontColor, setFontColor] = useState<string>();
-  const [animate, setAnimate] = useState<string>();
+  const [variation, setVariation] = useState<Message["variation"]>();
 
-  useEffect(() => {
-    if (type == "success") {
-      setColor("#6eff88");
-      setFontColor("#000");
-    } else if (type == "warning") {
-      setColor("#fff703");
-      setFontColor("#000");
-    } else {
-      setColor("#ff4053");
-      setFontColor("#000");
+  const handleClick = (style: Message) => {
+    setOpen(true);
+    setMessage(style.message);
+    setVariation(style.variation);
+  };
+
+  const handleClose = (event?: SyntheticEvent | Event, reason?: string) => {
+    if (reason === "clickaway") {
+      return;
     }
-  }, [type]);
 
-  useEffect(() => {
-    setAnimate("animate-in");
-    setTimeout(() => {
-      setAnimate("animate-out");
-      setTimeout(() => {
-        setVisible(false);
-      }, 1000);
-    }, 5000);
-  }, [visible]);
-
-  const handleVisible = () => {
-    setAnimate("animate-out");
-    setTimeout(() => {
-      setVisible(false);
-    }, 1000);
+    setOpen(false);
   };
 
   return {
-    visible: visible,
-    setVisible: setVisible,
-    setTitle: setTitle,
-    setMessage: setMessage,
-    setType: setType,
+    handleClick,
+    handleClose,
     element: (
-      <S.styledMessage
-        color={color}
-        fontColor={fontColor}
-        animate={animate}
-        onClick={handleVisible}
-      >
-        <h1>{title}</h1>
-        <p>{message}</p>
-      </S.styledMessage>
+      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+        <Alert
+          onClose={handleClose}
+          severity={variation}
+          sx={{ width: "100%", border: "1px solid #000" }}
+        >
+          {message}
+        </Alert>
+      </Snackbar>
     ),
   };
 };

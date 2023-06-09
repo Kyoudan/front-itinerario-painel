@@ -17,8 +17,7 @@ export const Login = () => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const userContext = useContext(AuthContext);
-  const { element, visible, setMessage, setVisible, setType, setTitle } =
-    MessageBalloon();
+  const { element, handleClick } = MessageBalloon();
 
   const navigation = useNavigate();
 
@@ -69,13 +68,13 @@ export const Login = () => {
       navigation("/");
     } catch (err: any) {
       setLoading(false);
-      setTitle("Error");
-      setType("alert");
-      setVisible(true);
       if (err.response) {
-        setMessage(err.response.data.message);
+        handleClick({
+          message: err.response.data.message,
+          variation: "error",
+        });
       } else {
-        setMessage("* Erro inesperado!!");
+        handleClick({ message: "Erro inesperado!!", variation: "error" });
       }
     }
   };
@@ -100,7 +99,7 @@ export const Login = () => {
 
   return (
     <S.styledDiv>
-      {visible && element}
+      {element}
       <img src={Fundo} />
       <Card
         borderRadius="30px"

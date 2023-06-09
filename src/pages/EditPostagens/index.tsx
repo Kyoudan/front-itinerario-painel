@@ -21,6 +21,7 @@ import { Message } from "../../components/Message";
 import { ModalDeleteField } from "./components/ModalDeleteField";
 import { Skeleton } from "@mui/material";
 import { ViewPosts } from "./components/View";
+import { MessageBalloon } from "../../hooks/Message";
 
 interface IItemsContent {
   id: number;
@@ -47,6 +48,7 @@ export const EditPostagens = () => {
   const [openModelDeleteField, setOpenModelDeleteField] =
     useState<boolean>(false);
   const { user, VerifyToken } = useContext(AuthContext);
+  const { element, handleClick } = MessageBalloon();
   const navigate = useNavigate();
 
   const handleDeleteSection = (id: number) => {
@@ -204,12 +206,18 @@ export const EditPostagens = () => {
           setCheck(false);
         }, 3000);
       }
-    } catch (err) {
+    } catch (err: any) {
       setLoading(false);
-      console.log(err);
+      if (err.response) {
+        handleClick({
+          message: err.response.data.message,
+          variation: "error",
+        });
+      } else {
+        handleClick({ message: "Erro inesperado!!", variation: "error" });
+      }
     }
   };
-
 
   useEffect(() => {
     VerifyToken();
@@ -227,6 +235,7 @@ export const EditPostagens = () => {
 
   return user && slug ? (
     <Container>
+      {element}
       <S.styledDiv>
         <Header
           navigate={useNavigate()}

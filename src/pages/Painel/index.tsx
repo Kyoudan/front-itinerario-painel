@@ -8,14 +8,8 @@ import { Accordion, AccordionSummary, AccordionDetails } from "@mui/material";
 
 export const Painel = () => {
   const { user, VerifyToken } = useContext(AuthContext);
-  const { element, visible, setVisible, setMessage, setTitle, setType } =
-    MessageBalloon();
 
   useEffect(() => {
-    setVisible(true);
-    setTitle("Teste");
-    setMessage("Minha descrição");
-    setType("warning");
     VerifyToken();
   }, []);
 

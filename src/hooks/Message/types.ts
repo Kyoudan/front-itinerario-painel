@@ -1,5 +1,4 @@
-export interface IStyledMessage {
-  color?: string;
-  fontColor?: string;
-  animate?: string;
+export interface Message {
+  variation: "success" | "error" | "warning" | "info";
+  message: string;
 }
