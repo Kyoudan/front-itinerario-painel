@@ -4,6 +4,8 @@ import { IProps } from "./types";
 import { HashLoader } from "react-spinners";
 
 export const Button = ({
+  active,
+  filter,
   message,
   width,
   height,
@@ -32,6 +34,13 @@ export const Button = ({
   Icon,
   onClick,
 }: IProps) => {
+  if (active == false) {
+    onClick = undefined;
+    backgroundColor = "#fff";
+    color = "#ccc";
+    border = "1px solid #ccc";
+    filter = "grayscale(100%)";
+  }
   return (
     <>
       <S.styledButton
@@ -48,14 +57,15 @@ export const Button = ({
         justifyContent={justifyContent}
         mediaCustom={mediaCustom}
         color={color}
-        onClick={onClick}
         boxShadow={boxShadow}
         boxShadowHover={boxShadowHover}
         fontSize={fontSize}
+        onClick={onClick}
         onMouseOver={onMouseHover}
         onMouseDown={onMouseDown}
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
+        filter={filter}
         borderHover={borderHover}
       >
         {isLoading ? (

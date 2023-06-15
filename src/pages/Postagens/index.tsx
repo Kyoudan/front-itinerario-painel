@@ -18,9 +18,12 @@ import {
   Paper,
   TablePagination,
   Table,
+  TextField,
 } from "@mui/material";
 import { AiFillDelete } from "react-icons/ai";
 import Cookies from "js-cookie";
+import { ModalComponent } from "../../components/Modal";
+import { Message } from "../../components/Message";
 
 export const Postagens = () => {
   const [posts, setPosts] = useState<IPosts[]>([]);
@@ -35,6 +38,10 @@ export const Postagens = () => {
   const [isSearch, setIsSearch] = useState<boolean>(false);
   const [limitFind, setLimitFind] = useState<number>();
   const [height, setHeight] = useState<number>(window.innerHeight);
+  const [modalDelete, setModalDelete] = useState<boolean>(false);
+  const [buttonActivation, setButtonActivation] = useState<boolean | undefined>(false);
+  const [confirmText, setConfirmText] = useState<string>("");
+  const [uuidPostForDelete, setUuidPostForDelete] = useState<string>("");
 
   const TitleStyle = {
     color: "#ff5c5c",
@@ -56,7 +63,7 @@ export const Postagens = () => {
   const contentStyle = {
     color: "#fff",
     fontFamily: "Montserrat",
-    fontSize: "1.1em",
+    fontSize: "1.5em",
   };
 
   const handleGetAllPosts = async (count?: number) => {
@@ -136,6 +143,18 @@ export const Postagens = () => {
     navigate(`/postagens/${link.route}`);
   };
 
+  const handleDeletePost = async (uuid: string) => {
+    try {
+      await api.delete(`/post/${uuid}`, {
+        headers: {
+          Authorization: `${Cookies.get("token")}`,
+        },
+      });
+      handleGetAllPosts();
+      setConfirmText("");
+    } catch {}
+  };
+
   const verifyHeight = () => {
     if (height > 900) {
       setLimitFind(7);
@@ -163,8 +182,49 @@ export const Postagens = () => {
     handleGetAllPosts();
   }, [limitFind]);
 
+  useEffect(() => {
+    if (confirmText == "password") {
+      setButtonActivation(true);
+    } else {
+      setButtonActivation(false);
+    }
+  }, [confirmText]);
+
   return user ? (
     <Container>
+      <ModalComponent open={modalDelete} onClose={() => setModalDelete(false)}>
+        <>
+          <Message
+              fontFamily="Montserrat"
+              fontSize="1.5em"
+              message="Digite a senha para prosseguir"
+            />
+          <TextField
+            variant="outlined"
+            label="Senha"
+            style={{ width: "400px" }}
+            onChange={(e) => {
+              setConfirmText(e.target.value);
+            }}
+          ></TextField>
+          <Button
+            width="100%"
+            height="50px"
+            background="#ff3939"
+            boxShadowHover="0px 0px 10px 1px #ff3939"
+            justifyContent="center"
+            borderRadius="5px"
+            fontSize="0.9em"
+            border="none"
+            onClick={() => {
+              handleDeletePost(uuidPostForDelete);
+              setModalDelete(false);
+            }}
+            message="Eu compreendo as consequências de excluir o post"
+            active={buttonActivation}
+          />
+        </>
+      </ModalComponent>
       <S.styledDiv>
         <Header navigate={useNavigate()} />
         <SearchBar
@@ -196,7 +256,6 @@ export const Postagens = () => {
               <Table>
                 <TableHead sx={TableHeadStyle}>
                   <TableRow>
-                    <TableCell sx={TitleStyle}>ID</TableCell>
                     <TableCell sx={TitleStyle}>Nome</TableCell>
                     <TableCell sx={TitleStyle}>Descrição</TableCell>
                     <TableCell sx={TitleStyle} align="center">
@@ -209,7 +268,6 @@ export const Postagens = () => {
                   {posts &&
                     posts.map((item) => (
                       <TableRow>
-                        <TableCell sx={contentStyle}>{item.id}</TableCell>
                         <TableCell sx={contentStyle}>{item.name}</TableCell>
                         <TableCell sx={contentStyle}>
                           {item.description}
@@ -224,6 +282,10 @@ export const Postagens = () => {
                             justifyContent="center"
                             border="0"
                             boxShadowHover="0px 0px 10px 1px #ff3939"
+                            onClick={() => {
+                              setModalDelete(true);
+                              setUuidPostForDelete(item.uuid);
+                            }}
                           />
                         </TableCell>
 

@@ -157,6 +157,7 @@ export const Tags = () => {
           text={(e) => setSearch(e.target.value)}
           onClick={handleSeacrhTags}
           widthCard="100%"
+          
         />
         {tags && (
           <Paper

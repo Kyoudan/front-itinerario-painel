@@ -2,6 +2,8 @@ import { MouseEventHandler } from "react";
 import { IconType } from "react-icons/lib";
 
 export interface IProps {
+  filter?: string;
+  active?: boolean;
   message?: string;
   width?: string;
   height?: string;
@@ -34,6 +36,7 @@ export interface IProps {
 }
 
 export interface IStyledButton {
+  filter?: string;
   width?: string;
   height?: string;
   margin?: string;

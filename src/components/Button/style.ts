@@ -7,6 +7,7 @@ export const styledButton = styled.button<IStyledButton>`
   margin: ${({ margin }) => (margin ? margin : "0px")};
   border-radius: ${({ borderRadius }) => (borderRadius ? borderRadius : "5px")};
   border: ${({ border }) => (border ? border : "")};
+  filter: ${({ filter }) => (filter ? filter : "")};
   display: flex;
   flex-direction: row;
   column-gap: 10px;
