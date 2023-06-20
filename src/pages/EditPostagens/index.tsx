@@ -55,6 +55,7 @@ export const EditPostagens = () => {
   const [referenceImageModal, setReferenceImageModal] = useState<string>("");
   const [idImageModal, setIdImageModal] = useState<number>();
   const [isFavorite, setIsFavorite] = useState<boolean>(false);
+  const [typeImageModal, setTypeImageModal] = useState<string>("");
   const { user, VerifyToken } = useContext(AuthContext);
   const { element, handleClick } = MessageBalloon();
   const navigate = useNavigate();
@@ -62,12 +63,14 @@ export const EditPostagens = () => {
   const handleModalConfigImage = (
     image: string,
     reference: string,
-    id: number
+    id: number,
+    type: string
   ) => {
     setOpenModalConfigImage(true);
     setImageModal(image);
     setReferenceImageModal(reference);
     setIdImageModal(id);
+    setTypeImageModal(type);
   };
 
   const handleDeleteSection = (id: number) => {
@@ -285,6 +288,7 @@ export const EditPostagens = () => {
               image={imageModal}
               reference={referenceImageModal}
               id={idImageModal!}
+              type={typeImageModal}
             />
             {!view ? (
               <S.styledDivOverflow>
@@ -367,7 +371,7 @@ export const EditPostagens = () => {
                               onClick={() => handleDeleteSection(item.id)}
                             />
 
-                            {item.type != "image" ? (
+                            {item.type == "text" ? (
                               <Input
                                 label="Size"
                                 width="50px"
@@ -400,7 +404,8 @@ export const EditPostagens = () => {
                                   handleModalConfigImage(
                                     item.content,
                                     item.reference,
-                                    item.id
+                                    item.id,
+                                    item.type
                                   )
                                 }
                                 margin="10px 0 0 0"

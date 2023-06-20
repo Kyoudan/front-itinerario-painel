@@ -24,13 +24,15 @@ export const ModalNewField = ({ open, onClose, uuid, setReload }: IProps) => {
   const [type, setType] = useState<string>("text");
   const [size, setSize] = useState<number>();
   const [loading, setLoading] = useState<boolean>(false);
-  const [reference, setReference] = useState<string>("")
+  const [reference, setReference] = useState<string>("");
 
   useEffect(() => {
     console.log(content, type, size);
     if (content && type && type == "text" && size && size > 0 && size <= 3) {
       setDisableButton(false);
     } else if (content && type && type == "image" && !size) {
+      setDisableButton(false);
+    } else if (type === "video" && content) {
       setDisableButton(false);
     } else {
       setDisableButton(true);
@@ -79,6 +81,7 @@ export const ModalNewField = ({ open, onClose, uuid, setReload }: IProps) => {
             >
               <MenuItem value={"text"}>Texto</MenuItem>
               <MenuItem value={"image"}>Imagem</MenuItem>
+              <MenuItem value={"video"}>Video</MenuItem>
             </Select>
           </FormControl>
           <TextField

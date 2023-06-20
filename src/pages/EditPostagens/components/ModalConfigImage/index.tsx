@@ -12,6 +12,7 @@ interface IProps {
   image?: string;
   reference?: string;
   id: number;
+  type: string;
 }
 
 export const ModalConfigImage = ({
@@ -21,6 +22,7 @@ export const ModalConfigImage = ({
   image,
   reference,
   id,
+  type,
 }: IProps) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [referenceField, setReferenceField] = useState<string | undefined>();
@@ -46,26 +48,43 @@ export const ModalConfigImage = ({
     }
   };
 
+  console.log(image);
+
   return (
     <ModalComponent open={open} onClose={onClose}>
       <>
-        <img
-          src={image}
-          alt="Imagem"
-          style={{ width: "100%" }}
-          width={250}
-          height={250}
-        />
-        <TextField
-          id="outlined-basic"
-          label="Referencia"
-          variant="outlined"
-          style={{ width: "100%" }}
-          sx={{ color: "primary.main" }}
-          multiline
-          onChange={(e) => setReferenceField(e.target.value)}
-          value={referenceField}
-        />
+        {type === "image" && (
+          <img
+            src={image}
+            alt="Imagem"
+            style={{ width: "100%" }}
+            width={250}
+            height={250}
+          />
+        )}
+        {type === "video" && (
+          <iframe
+            width="400"
+            height="315"
+            src={image}
+            frameBorder="0"
+            title="YouTube video player"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowFullScreen
+          ></iframe>
+        )}
+        {type == "image" && (
+          <TextField
+            id="outlined-basic"
+            label="Referencia"
+            variant="outlined"
+            style={{ width: "100%" }}
+            sx={{ color: "primary.main" }}
+            multiline
+            onChange={(e) => setReferenceField(e.target.value)}
+            value={referenceField}
+          />
+        )}
         {!loading ? (
           <Button
             variant="outlined"
