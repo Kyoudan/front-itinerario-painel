@@ -54,6 +54,7 @@ export const EditPostagens = () => {
   const [imageModal, setImageModal] = useState<string>("");
   const [referenceImageModal, setReferenceImageModal] = useState<string>("");
   const [idImageModal, setIdImageModal] = useState<number>();
+  const [isFavorite, setIsFavorite] = useState<boolean>(false);
   const { user, VerifyToken } = useContext(AuthContext);
   const { element, handleClick } = MessageBalloon();
   const navigate = useNavigate();
@@ -116,6 +117,7 @@ export const EditPostagens = () => {
         setTextTitle(result.data.name);
         setAuthor(result.data.author);
         setImage(result.data.image);
+        setIsFavorite(result.data.isFixed)
       }
     } catch (err) {
       console.log(err);
@@ -266,6 +268,7 @@ export const EditPostagens = () => {
           setReload={setReload}
           finished={post?.finished}
           viewPosts={setViewPosts}
+          isFavorite={isFavorite}
         />
         {post ? (
           <S.styledDivContent>

@@ -22,7 +22,15 @@ import {
 import { CheckAnimate } from "../../../../components/CheckAnimation";
 import { ModalNewField } from "../ModalNewField";
 import { ModalPublish } from "../ModalPublish";
-import { MdOutlinePublish, MdContentPasteGo } from "react-icons/md";
+import {
+  MdOutlinePublish,
+  MdContentPasteGo,
+  MdFavoriteBorder,
+  MdFavorite,
+} from "react-icons/md";
+import { api } from "../../../../api/api";
+import { MessageBalloon } from "../../../../hooks/Message";
+import Cookies from "js-cookie";
 
 interface IProps {
   isCheck?: boolean;
@@ -34,6 +42,7 @@ interface IProps {
   navigate?: NavigateFunction;
   onClick?: MouseEventHandler;
   viewPosts: Dispatch<SetStateAction<boolean>>;
+  isFavorite: boolean;
 }
 
 export const Header = ({
@@ -46,12 +55,16 @@ export const Header = ({
   setReload,
   finished,
   viewPosts,
+  isFavorite,
 }: IProps) => {
   const [check, setCheck] = useState(false);
   const [saveIconColor, setSaveIconColor] = useState<string>("#fff");
   const [openModalNewField, setOpenModalNewField] = useState<boolean>(false);
   const [openModalPublish, setOpenModalPublish] = useState<boolean>(false);
   const [qFinished, setQFinished] = useState<boolean>(false);
+  const [favorite, setFavorite] = useState<boolean>(false);
+  const { element, handleClick } = MessageBalloon();
+
   const navigateToView = () => {
     if (navigate) {
       navigate("/postagens");
@@ -70,6 +83,56 @@ export const Header = ({
       : setOpenModalNewField(true);
   };
 
+  const handleAddFeaturedPost = async () => {
+    try {
+      const result = await api.post(
+        `/featuredposts/`,
+        {
+          postId: uuid,
+        },
+        {
+          headers: {
+            authorization: `${Cookies.get("token")}`,
+          },
+        }
+      );
+      console.log(result);
+      handleClick({
+        message: "Favoritado com sucesso!!",
+        variation: "success",
+      });
+      setFavorite(true);
+    } catch (err) {
+      console.log(err);
+      handleClick({
+        message: "Erro ao favoritar postagem",
+        variation: "error",
+      });
+    }
+  };
+
+  const handleRemoveFeaturedPost = async () => {
+    try {
+      const result = await api.delete(`/featuredposts/${uuid}`, {
+        headers: {
+          authorization: `${Cookies.get("token")}`,
+        },
+      });
+      console.log(result);
+      handleClick({
+        message: "Desfavoritado com sucesso!!",
+        variation: "success",
+      });
+      setFavorite(false);
+    } catch (err) {
+      console.log(err);
+      handleClick({
+        message: "Erro ao desfavoritar postagem",
+        variation: "error",
+      });
+    }
+  };
+
   useEffect(() => {
     if (isCheck == false || isCheck) {
       setCheck(isCheck);
@@ -83,8 +146,13 @@ export const Header = ({
     }
   }, [finished]);
 
+  useEffect(() => {
+    setFavorite(isFavorite);
+  }, [isFavorite])
+
   return (
     <S.styledDiv>
+      {element}
       <div className="classdiv">
         {!check ? (
           <Button
@@ -127,6 +195,16 @@ export const Header = ({
       </div>
 
       <div className="right classdiv">
+        <Button
+          Icon={() => (favorite ? <MdFavorite /> : <MdFavoriteBorder />)}
+          width="50px"
+          justifyContent="center"
+          backgroundColor="transparent"
+          border="1px solid #494949"
+          backgroundHover="#494949"
+          boxShadowHover="0px 0px 10px 3px #494949"
+          onClick={favorite ? handleRemoveFeaturedPost : handleAddFeaturedPost}
+        />
         <Button
           Icon={() => <MdContentPasteGo />}
           width="50px"

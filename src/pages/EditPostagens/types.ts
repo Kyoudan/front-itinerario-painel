@@ -8,6 +8,7 @@ export interface IPosts {
   author: string;
   uuid: string;
   createdAt: string;
+  isFixed: boolean;
   postTags: {
     id: number;
     name: string;
